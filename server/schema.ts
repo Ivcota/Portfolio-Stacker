@@ -44,7 +44,7 @@ export const lists: Lists = {
         isFilterable: true,
       }),
       password: password({ validation: { isRequired: true } }),
-      profilePictureURL: image(),
+      profilePicture: image(),
       socialMediaURL: text(),
       githubURL: text(),
       isAdmin: checkbox({ defaultValue: false }),

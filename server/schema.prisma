@@ -12,22 +12,22 @@ generator client {
 }
 
 model User {
-  id                          String    @id @default(cuid())
-  firstName                   String    @default("")
-  lastName                    String    @default("")
-  email                       String    @unique @default("")
-  password                    String
-  profilePictureURL_filesize  Int?
-  profilePictureURL_extension String?
-  profilePictureURL_width     Int?
-  profilePictureURL_height    Int?
-  profilePictureURL_mode      String?
-  profilePictureURL_id        String?
-  socialMediaURL              String    @default("")
-  githubURL                   String    @default("")
-  isAdmin                     Boolean   @default(false)
-  websiteURL                  String    @default("")
-  projects                    Project[] @relation("Project_user")
+  id                       String    @id @default(cuid())
+  firstName                String    @default("")
+  lastName                 String    @default("")
+  email                    String    @unique @default("")
+  password                 String
+  profilePicture_filesize  Int?
+  profilePicture_extension String?
+  profilePicture_width     Int?
+  profilePicture_height    Int?
+  profilePicture_mode      String?
+  profilePicture_id        String?
+  socialMediaURL           String    @default("")
+  githubURL                String    @default("")
+  isAdmin                  Boolean   @default(false)
+  websiteURL               String    @default("")
+  projects                 Project[] @relation("Project_user")
 }
 
 model Project {

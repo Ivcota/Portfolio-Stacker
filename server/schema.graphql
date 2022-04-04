@@ -7,7 +7,7 @@ type User {
   lastName: String
   email: String
   password: PasswordState
-  profilePictureURL: ImageFieldOutput
+  profilePicture: ImageFieldOutput
   socialMediaURL: String
   githubURL: String
   isAdmin: Boolean
@@ -133,7 +133,7 @@ input UserUpdateInput {
   lastName: String
   email: String
   password: String
-  profilePictureURL: ImageFieldInput
+  profilePicture: ImageFieldInput
   socialMediaURL: String
   githubURL: String
   isAdmin: Boolean
@@ -168,7 +168,7 @@ input UserCreateInput {
   lastName: String
   email: String
   password: String
-  profilePictureURL: ImageFieldInput
+  profilePicture: ImageFieldInput
   socialMediaURL: String
   githubURL: String
   isAdmin: Boolean
