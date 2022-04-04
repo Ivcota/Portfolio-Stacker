@@ -36,5 +36,14 @@ export default withAuth(
         storagePath: "public/images",
       },
     },
+    server: {
+      cors: {
+        origin: ["https://studio.apollographql.com", "http://localhost:3001"],
+        credentials: true,
+      },
+    },
+    graphql: {
+      playground: "apollo",
+    },
   })
 );

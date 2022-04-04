@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useAuthenticateUserWithPasswordMutation } from "./../../src/generated/graphql";
 
 interface IFormState {
   email: string;
@@ -13,12 +14,31 @@ const Login = () => {
     formState: { errors },
   } = useForm<IFormState>();
 
+  const [
+    authenticateUserResult,
+    authenticateUser,
+  ] = useAuthenticateUserWithPasswordMutation();
+
   return (
     <div>
       <h1>Portfolio Stacker</h1>
       <form
         onSubmit={handleSubmit(async (data) => {
           console.log(data);
+
+          const res = await authenticateUser({
+            email: data.email.toLowerCase(),
+            password: data.password,
+          });
+
+          if (
+            res.data?.authenticateUserWithPassword?.__typename ===
+            "UserAuthenticationWithPasswordFailure"
+          ) {
+            console.log("fail");
+          } else {
+            console.log("Success");
+          }
         })}
       >
         <label>Email</label>
