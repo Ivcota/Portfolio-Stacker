@@ -53,7 +53,7 @@ export const lists: Lists = {
     },
     ui: {
       listView: {
-        initialColumns: ["firstName"],
+        initialColumns: ["email", "firstName", "projects"],
       },
       labelField: "email",
     },
