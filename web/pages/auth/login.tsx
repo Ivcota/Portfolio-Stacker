@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useAuthenticateUserWithPasswordMutation } from "./../../src/generated/graphql";
@@ -19,6 +20,8 @@ const Login = () => {
     authenticateUser,
   ] = useAuthenticateUserWithPasswordMutation();
 
+  const router = useRouter();
+
   return (
     <div>
       <h1>Portfolio Stacker</h1>
@@ -38,6 +41,7 @@ const Login = () => {
             console.log("fail");
           } else {
             console.log("Success");
+            router.push("/dashboard");
           }
         })}
       >
