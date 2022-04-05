@@ -569,6 +569,11 @@ export type AuthenticateUserWithPasswordMutationVariables = Exact<{
 
 export type AuthenticateUserWithPasswordMutation = { __typename?: 'Mutation', authenticateUserWithPassword?: { __typename?: 'UserAuthenticationWithPasswordFailure', message: string } | { __typename?: 'UserAuthenticationWithPasswordSuccess', sessionToken: string, item: { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, email?: string | null, isAdmin?: boolean | null, websiteURL?: string | null, githubURL?: string | null, socialMediaURL?: string | null, profilePicture?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null } } | null };
 
+export type UserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserQuery = { __typename?: 'Query', authenticatedItem?: { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, email?: string | null, githubURL?: string | null, isAdmin?: boolean | null, websiteURL?: string | null, projectsCount?: number | null, profilePicture?: { __typename?: 'CloudImageFieldOutput', id: string, url: string } | { __typename?: 'LocalImageFieldOutput', id: string, url: string } | null } | null };
+
 
 export const AuthenticateUserWithPasswordDocument = gql`
     mutation AuthenticateUserWithPassword($email: String!, $password: String!) {
@@ -598,4 +603,28 @@ export const AuthenticateUserWithPasswordDocument = gql`
 
 export function useAuthenticateUserWithPasswordMutation() {
   return Urql.useMutation<AuthenticateUserWithPasswordMutation, AuthenticateUserWithPasswordMutationVariables>(AuthenticateUserWithPasswordDocument);
+};
+export const UserDocument = gql`
+    query User {
+  authenticatedItem {
+    ... on User {
+      id
+      firstName
+      lastName
+      email
+      profilePicture {
+        id
+        url
+      }
+      githubURL
+      isAdmin
+      websiteURL
+      projectsCount
+    }
+  }
+}
+    `;
+
+export function useUserQuery(options?: Omit<Urql.UseQueryArgs<UserQueryVariables>, 'query'>) {
+  return Urql.useQuery<UserQuery>({ query: UserDocument, ...options });
 };
