@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 
 const Home: NextPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-screen min-h-screen gap-3 dark:bg-steel-800">
+    <div className="flex flex-col items-center justify-center w-screen min-h-screen gap-3">
       <h1 className="text-3xl font-logo ">Portfolio Stacker</h1>
       <p>Quickly Get Your Work Seen</p>
       <Link href="/auth/login">

@@ -24,7 +24,7 @@ const Login = () => {
   const [msg, setMesg] = useState("");
 
   return (
-    <div>
+    <div className="w-screen min-h-screen">
       <h1>Portfolio Stacker</h1>
       <form
         onSubmit={handleSubmit(async (data) => {
@@ -33,38 +33,37 @@ const Login = () => {
               email: data.email.toLowerCase(),
               password: data.password,
             });
-
-            if (
-              res.data?.authenticateUserWithPassword?.__typename ===
-              "UserAuthenticationWithPasswordFailure"
-            ) {
-              console.log("fail");
-              setMesg("Incorrect email or password");
+            // @ts-expect-error
+            if (res.data?.authenticateUserWithPassword.message) {
+              // @ts-expect-error
+              setMesg(res.data?.authenticateUserWithPassword.message);
             } else {
-              console.log("Success");
               router.push("/dashboard");
             }
           } catch (error) {
+            console.log(authenticateUserResult.error?.message);
             console.log("fail");
           }
         })}
       >
         <label>Email: </label>
         <input
+          className="text-black"
           {...register("email", { required: "Email is required" })}
           type="email"
         />
-        <p> {errors.email?.message} </p>
+        <p className="text-red-300"> {errors.email?.message} </p>
 
         <label>Password: </label>
         <input
+          className="text-black"
           {...register("password", { required: "Password is required" })}
           type="password"
         />
-        <p> {errors.password?.message} </p>
+        <p className="text-red-300"> {errors.password?.message} </p>
         <button>Login</button>
 
-        <p> {msg} </p>
+        <p className="text-red-300"> {msg} </p>
       </form>
     </div>
   );
