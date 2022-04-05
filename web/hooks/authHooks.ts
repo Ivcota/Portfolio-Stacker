@@ -5,13 +5,7 @@ import { useUserQuery } from "../src/generated/graphql";
 // Custom useUser hook with Urql + Nextjs
 export function useUser() {
   const router = useRouter();
-  const [userResult] = useUserQuery();
-
-  useEffect(() => {
-    if (!userResult.data) {
-      router.push("/auth/login");
-    }
-  }, [userResult.error]);
+  const [userResult, refetchQuery] = useUserQuery();
 
   return {
     user: userResult.data?.authenticatedItem,
