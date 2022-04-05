@@ -574,6 +574,13 @@ export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type UserQuery = { __typename?: 'Query', authenticatedItem?: { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, email?: string | null, githubURL?: string | null, isAdmin?: boolean | null, websiteURL?: string | null, projectsCount?: number | null, profilePicture?: { __typename?: 'CloudImageFieldOutput', id: string, url: string } | { __typename?: 'LocalImageFieldOutput', id: string, url: string } | null } | null };
 
+export type UserProjectsQueryVariables = Exact<{
+  where: ProjectWhereInput;
+}>;
+
+
+export type UserProjectsQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'Project', id: string, title?: string | null, description?: string | null, githubURL?: string | null, websiteURL?: string | null, image?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null }> | null };
+
 
 export const AuthenticateUserWithPasswordDocument = gql`
     mutation AuthenticateUserWithPassword($email: String!, $password: String!) {
@@ -627,4 +634,22 @@ export const UserDocument = gql`
 
 export function useUserQuery(options?: Omit<Urql.UseQueryArgs<UserQueryVariables>, 'query'>) {
   return Urql.useQuery<UserQuery>({ query: UserDocument, ...options });
+};
+export const UserProjectsDocument = gql`
+    query UserProjects($where: ProjectWhereInput!) {
+  projects(where: $where) {
+    id
+    title
+    image {
+      url
+    }
+    description
+    githubURL
+    websiteURL
+  }
+}
+    `;
+
+export function useUserProjectsQuery(options: Omit<Urql.UseQueryArgs<UserProjectsQueryVariables>, 'query'>) {
+  return Urql.useQuery<UserProjectsQuery>({ query: UserProjectsDocument, ...options });
 };
