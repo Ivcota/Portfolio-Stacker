@@ -1,0 +1,9 @@
+.img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.img-holder {
+  border-radius: 10px;
+  width: 15rem;
+}
