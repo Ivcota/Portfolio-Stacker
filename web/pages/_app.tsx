@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider value={client}>
       <div className="dark">
-        <div className="font-body dark:text-steel-100 dark:bg-steel-800">
+        <div className="font-body dark:text-steel-100 dark:bg-steel-900">
           <Component {...pageProps} />
         </div>
       </div>
