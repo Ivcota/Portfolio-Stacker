@@ -11,7 +11,7 @@ const CheckAuth: FC = ({ children }) => {
 
   if (!user) {
     return (
-      <div>
+      <div className="min-h-screen flex flex-col items-center justify-center">
         <h1>Please Login</h1>
         <Link href="/auth/login">Login Here</Link>
       </div>

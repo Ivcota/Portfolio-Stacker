@@ -561,6 +561,11 @@ export type UserWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
 };
 
+export type EndSessionMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type EndSessionMutation = { __typename?: 'Mutation', endSession: boolean };
+
 export type AuthenticateUserWithPasswordMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -582,6 +587,15 @@ export type UserProjectsQueryVariables = Exact<{
 export type UserProjectsQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'Project', id: string, title?: string | null, description?: string | null, githubURL?: string | null, websiteURL?: string | null, image?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null }> | null };
 
 
+export const EndSessionDocument = gql`
+    mutation endSession {
+  endSession
+}
+    `;
+
+export function useEndSessionMutation() {
+  return Urql.useMutation<EndSessionMutation, EndSessionMutationVariables>(EndSessionDocument);
+};
 export const AuthenticateUserWithPasswordDocument = gql`
     mutation AuthenticateUserWithPassword($email: String!, $password: String!) {
   authenticateUserWithPassword(email: $email, password: $password) {

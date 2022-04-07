@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import React from "react";
 import CheckAuth from "../../components/CheckAuth";
 import ProjectCard from "../../components/ProjectCard";
+import { logout, useLogout } from "../../helpers/logout";
 import { useUser } from "../../hooks/authHooks";
 import { useUserProjectsQuery } from "./../../src/generated/graphql";
 import { BACKEND_URL } from "./../../utils/url";
@@ -21,9 +22,12 @@ const Dashboard: NextPage = () => {
     },
   });
 
+  const { logout } = useLogout();
+
   return (
     <CheckAuth>
       <div className="flex flex-col items-center w-screen min-h-screen">
+        <button onClick={logout}>End Session</button>
         <div className="w-40 mt-20 ">
           <img
             className="w-full rounded-full"
