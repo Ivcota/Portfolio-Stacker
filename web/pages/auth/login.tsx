@@ -26,7 +26,7 @@ const Login = () => {
   return (
     <div className="flex flex-col items-center w-screen min-h-screen ">
       <div className="flex flex-col items-center mt-8 rounded-md shadow-2xl bg-steel-700 p-9">
-        <h2 className="mb-1 text-3xl font-logo mt-9">Portfolio Stacker</h2>
+        <h1 className="mb-1 text-3xl font-logo mt-9">Portfolio Stacker</h1>
         <h2 className="mt-1 mb-2 text-2xl font-thin">Login</h2>
         <form
           className="flex flex-col"
@@ -51,7 +51,7 @@ const Login = () => {
         >
           <label>Email: </label>
           <input
-            className="px-2 py-1 my-2 text-black transition-all duration-200 rounded-sm outline-none hover:ring ring-red-400"
+            className="px-2 py-1 my-2 text-black transition-all duration-200 rounded-sm outline-none ring-red-400 focus:ring "
             {...register("email", { required: "Email is required" })}
             type="email"
           />
@@ -59,7 +59,7 @@ const Login = () => {
 
           <label>Password: </label>
           <input
-            className="px-2 py-1 my-2 text-black transition-all duration-200 rounded-sm outline-none hover:ring ring-red-400"
+            className="px-2 py-1 my-2 text-black transition-all duration-200 rounded-sm outline-none ring-red-400 focus:ring "
             {...register("password", { required: "Password is required" })}
             type="password"
           />
