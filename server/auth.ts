@@ -32,7 +32,7 @@ if (!sessionSecret) {
 const { withAuth } = createAuth({
   listKey: "User",
   identityField: "email",
-  sessionData: "firstName",
+  sessionData: "id firstName isAdmin",
   secretField: "password",
   initFirstItem: {
     // If there are no items in the database, keystone will ask you to create
@@ -40,6 +40,14 @@ const { withAuth } = createAuth({
     fields: ["firstName", "email", "password"],
   },
 });
+
+export type Session = {
+  data: {
+    id: string;
+    firstName: string;
+    isAdmin: boolean;
+  };
+};
 
 // This defines how long people will remain logged in for.
 // This will get refreshed when they log back in.
