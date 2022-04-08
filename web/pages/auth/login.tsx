@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -69,6 +70,10 @@ const Login = () => {
           </button>
 
           <p className="text-red-300"> {msg} </p>
+
+          <Link href="/auth/register">
+            <p>Create an Account</p>
+          </Link>
         </form>
       </div>
     </div>

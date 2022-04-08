@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -63,6 +64,10 @@ const Register = () => {
           <button className="self-center my-2 mb-5 text-center btn-primary">
             Register
           </button>
+
+          <Link href="/auth/login">
+            <p>Already have an account</p>
+          </Link>
         </form>
       </div>
     </div>
