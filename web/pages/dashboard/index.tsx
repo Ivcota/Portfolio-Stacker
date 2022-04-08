@@ -28,8 +28,13 @@ const Dashboard: NextPage = () => {
   return (
     <CheckAuth>
       <div className="flex flex-col items-center w-screen min-h-screen">
-        <button onClick={logout}>End Session</button>
-        <h1 className="mt-1 text-3xl font-logo">Portfolio Stacker</h1>
+        <button
+          className="p-1 m-1 rounded dark:bg-white dark:text-black"
+          onClick={logout}
+        >
+          End Session
+        </button>
+        <h1 className="mt-2 text-3xl font-logo">Portfolio Stacker</h1>
         <div className="w-40 mt-16 ">
           <img
             className="w-full rounded-full"
