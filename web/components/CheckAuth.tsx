@@ -1,9 +1,18 @@
 import Link from "next/link";
-import React, { FC } from "react";
+import { useRouter } from "next/router";
+import React, { FC, useEffect } from "react";
 import { useUser } from "../hooks/authHooks";
 
 const CheckAuth: FC = ({ children }) => {
   const { user, isLoading } = useUser();
+  const router = useRouter();
+
+  /* Run this check after the user is done loading... */
+  useEffect(() => {
+    if (!user && !isLoading) {
+      router.push("auth/login");
+    }
+  }, [user]);
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -11,8 +20,7 @@ const CheckAuth: FC = ({ children }) => {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <h1>Please Login</h1>
+      <div className="flex flex-col items-center justify-center min-h-screen">
         <Link href="/auth/login">Login Here</Link>
       </div>
     );
