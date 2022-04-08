@@ -1,8 +1,9 @@
 import { NextPage } from "next";
 import React from "react";
+import BottomNavbar from "../../components/BottomNavbar";
 import CheckAuth from "../../components/CheckAuth";
 import ProjectCard from "../../components/ProjectCard";
-import { logout, useLogout } from "../../helpers/logout";
+import { useLogout } from "../../helpers/logout";
 import { useUser } from "../../hooks/authHooks";
 import { useUserProjectsQuery } from "./../../src/generated/graphql";
 import { BACKEND_URL } from "./../../utils/url";
@@ -28,7 +29,8 @@ const Dashboard: NextPage = () => {
     <CheckAuth>
       <div className="flex flex-col items-center w-screen min-h-screen">
         <button onClick={logout}>End Session</button>
-        <div className="w-40 mt-20 ">
+        <h1 className="mt-1 text-3xl font-logo">Portfolio Stacker</h1>
+        <div className="w-40 mt-16 ">
           <img
             className="w-full rounded-full"
             src={BACKEND_URL + user?.profilePicture?.url}
@@ -36,7 +38,7 @@ const Dashboard: NextPage = () => {
         </div>
         <h1 className="mt-2 text-xl"> @{user?.firstName} </h1>
         <div>
-          <div className="flex flex-col items-center gap-3 mt-8 md:flex-wrap md:flex-row md:justify-center md:items-start ">
+          <div className="flex flex-col items-center gap-3 mt-8 mb-20 md:flex-wrap md:flex-row md:justify-center md:items-start ">
             {userProjects.data?.projects?.map((project) => {
               return (
                 <ProjectCard
@@ -53,6 +55,7 @@ const Dashboard: NextPage = () => {
             })}
           </div>
         </div>
+        <BottomNavbar />
       </div>
     </CheckAuth>
   );
