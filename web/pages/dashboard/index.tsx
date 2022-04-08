@@ -36,7 +36,7 @@ const Dashboard: NextPage = () => {
             src={BACKEND_URL + user?.profilePicture?.url}
           />
         </div>
-        <h1 className="mt-2 text-xl"> @{user?.firstName} </h1>
+        <h1 className="mt-2 text-xl"> {user?.username} </h1>
         <div>
           <div className="flex flex-col items-center gap-3 mt-8 mb-20 md:flex-wrap md:flex-row md:justify-center md:items-start ">
             {userProjects.data?.projects?.map((project) => {

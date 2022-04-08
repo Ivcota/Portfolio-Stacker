@@ -2,6 +2,7 @@ query User {
   authenticatedItem {
     ... on User {
       id
+      username
       firstName
       lastName
       email

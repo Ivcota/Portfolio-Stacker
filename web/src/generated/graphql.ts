@@ -459,6 +459,7 @@ export type User = {
   projects?: Maybe<Array<Project>>;
   projectsCount?: Maybe<Scalars['Int']>;
   socialMediaURL?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
   websiteURL?: Maybe<Scalars['String']>;
 };
 
@@ -498,6 +499,7 @@ export type UserCreateInput = {
   profilePicture?: InputMaybe<ImageFieldInput>;
   projects?: InputMaybe<ProjectRelateToManyForCreateInput>;
   socialMediaURL?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
   websiteURL?: InputMaybe<Scalars['String']>;
 };
 
@@ -509,6 +511,7 @@ export type UserOrderByInput = {
   isAdmin?: InputMaybe<OrderDirection>;
   lastName?: InputMaybe<OrderDirection>;
   socialMediaURL?: InputMaybe<OrderDirection>;
+  username?: InputMaybe<OrderDirection>;
   websiteURL?: InputMaybe<OrderDirection>;
 };
 
@@ -538,6 +541,7 @@ export type UserUpdateInput = {
   profilePicture?: InputMaybe<ImageFieldInput>;
   projects?: InputMaybe<ProjectRelateToManyForUpdateInput>;
   socialMediaURL?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
   websiteURL?: InputMaybe<Scalars['String']>;
 };
 
@@ -553,6 +557,7 @@ export type UserWhereInput = {
   lastName?: InputMaybe<StringFilter>;
   projects?: InputMaybe<ProjectManyRelationFilter>;
   socialMediaURL?: InputMaybe<StringFilter>;
+  username?: InputMaybe<StringFilter>;
   websiteURL?: InputMaybe<StringFilter>;
 };
 
@@ -577,7 +582,7 @@ export type AuthenticateUserWithPasswordMutation = { __typename?: 'Mutation', au
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserQuery = { __typename?: 'Query', authenticatedItem?: { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, email?: string | null, githubURL?: string | null, isAdmin?: boolean | null, websiteURL?: string | null, projectsCount?: number | null, profilePicture?: { __typename?: 'CloudImageFieldOutput', id: string, url: string } | { __typename?: 'LocalImageFieldOutput', id: string, url: string } | null } | null };
+export type UserQuery = { __typename?: 'Query', authenticatedItem?: { __typename?: 'User', id: string, username?: string | null, firstName?: string | null, lastName?: string | null, email?: string | null, githubURL?: string | null, isAdmin?: boolean | null, websiteURL?: string | null, projectsCount?: number | null, profilePicture?: { __typename?: 'CloudImageFieldOutput', id: string, url: string } | { __typename?: 'LocalImageFieldOutput', id: string, url: string } | null } | null };
 
 export type UserProjectsQueryVariables = Exact<{
   where: ProjectWhereInput;
@@ -630,6 +635,7 @@ export const UserDocument = gql`
   authenticatedItem {
     ... on User {
       id
+      username
       firstName
       lastName
       email
