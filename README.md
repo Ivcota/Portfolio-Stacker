@@ -1,5 +1,16 @@
 # Portfolio-Stacker
 
+## How to run in development
+
+1. cd into `server` and run `yarn` to install deps.
+2. cd into `web` and run `yarn` to install deps.
+3. cd into `server` and run `yarn dev`.
+4. cd into `web` and run `yarn dev`.
+
+It's important to run the server folder first in-order to get localhost urls setup correctly. The server should run on localhost:3000 and the nextjs server should run on localhost:3001
+
+
+## Overview
 This is a simple application with a React/NextJS front-end & Express/GraphQL/KeystoneJS backend.
 
 Application Stack:
