@@ -47,6 +47,30 @@ export const lists: Lists = {
       },
     },
     fields: {
+      username: text({
+        hooks: {
+          /* Resolve a username based off the firstname and lastname being combined */
+          resolveInput: async ({ inputData, item }) => {
+            if (inputData.firstName && inputData.lastName) {
+              return ("@" +
+                (inputData?.firstName as string) +
+                inputData?.lastName) as string;
+            }
+
+            if (inputData.firstName) {
+              return ("@" +
+                (inputData?.firstName as string) +
+                item?.lastName) as string;
+            }
+
+            if (inputData.lastName) {
+              return ("@" +
+                (item?.firstName as string) +
+                inputData?.lastName) as string;
+            }
+          },
+        },
+      }),
       firstName: text({ validation: { isRequired: true } }),
       lastName: text(),
       email: text({
@@ -64,7 +88,7 @@ export const lists: Lists = {
     },
     ui: {
       listView: {
-        initialColumns: ["email", "firstName", "projects"],
+        initialColumns: ["username", "email", "firstName", "projects"],
       },
       labelField: "email",
     },

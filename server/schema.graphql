@@ -3,6 +3,7 @@
 
 type User {
   id: ID!
+  username: String
   firstName: String
   lastName: String
   email: String
@@ -52,6 +53,7 @@ input UserWhereInput {
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
   id: IDFilter
+  username: StringFilter
   firstName: StringFilter
   lastName: StringFilter
   email: StringFilter
@@ -114,6 +116,7 @@ input ProjectManyRelationFilter {
 
 input UserOrderByInput {
   id: OrderDirection
+  username: OrderDirection
   firstName: OrderDirection
   lastName: OrderDirection
   email: OrderDirection
@@ -129,6 +132,7 @@ enum OrderDirection {
 }
 
 input UserUpdateInput {
+  username: String
   firstName: String
   lastName: String
   email: String
@@ -164,6 +168,7 @@ input UserUpdateArgs {
 }
 
 input UserCreateInput {
+  username: String
   firstName: String
   lastName: String
   email: String
