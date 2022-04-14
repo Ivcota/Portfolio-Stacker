@@ -9,6 +9,7 @@ import {
   useMantineColorScheme,
 } from "@mantine/core";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme) => ({
   base: {
@@ -37,13 +38,17 @@ const useStyles = createStyles((theme) => ({
 const Home: NextPage = () => {
   const { classes } = useStyles();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const router = useRouter();
 
   return (
     <Container>
       <Stack className={classes.base} justify="center" align="center">
         <Title align="center">Portfolio Stacker</Title>
         <Text align="center">Quickly Get Your Work Seen.</Text>
-        <Button onClick={() => toggleColorScheme()} className={classes.button}>
+        <Button
+          onClick={() => router.push("/login")}
+          className={classes.button}
+        >
           Get Started
         </Button>
       </Stack>
