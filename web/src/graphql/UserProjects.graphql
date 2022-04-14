@@ -1,0 +1,12 @@
+query UserProjects($where: ProjectWhereInput!) {
+  projects(where: $where) {
+    id
+    title
+    image {
+      url
+    }
+    description
+    githubURL
+    websiteURL
+  }
+}

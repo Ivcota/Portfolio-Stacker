@@ -6,8 +6,15 @@ import {
   Global,
   MantineProvider,
 } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useLocalStorage } from "@mantine/hooks";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+declare module "react-query/types/react/QueryClientProvider" {
+  interface QueryClientProviderProps {
+    children?: ReactNode;
+  }
+}
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
@@ -18,6 +25,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     key: "color-scheme",
     defaultValue: "dark",
   });
+
+  const queryClient = new QueryClient();
 
   useEffect(() => {
     setColorScheme(value);
@@ -60,7 +69,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             },
           })}
         />
-        <Component {...pageProps} />
+        <QueryClientProvider client={queryClient}>
+          <Component {...pageProps} />
+        </QueryClientProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );
