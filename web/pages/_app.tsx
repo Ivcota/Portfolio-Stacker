@@ -66,6 +66,10 @@ function MyApp({ Component, pageProps }: AppProps) {
             body: {
               transition: "ease-in-out",
               transitionDuration: "300ms",
+              background:
+                theme.colorScheme === "dark"
+                  ? theme.colors.dark[9]
+                  : theme.colors.dark[0],
             },
           })}
         />
