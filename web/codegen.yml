@@ -6,9 +6,9 @@ generates:
     plugins:
       - "typescript"
       - "typescript-operations"
-      - "typescript-react-query"
+      - "typescript-urql"
   ./graphql.schema.json:
     plugins:
       - "introspection"
     config:
-      fetcher: fetch
+      withHooks: true

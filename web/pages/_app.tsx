@@ -1,5 +1,3 @@
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
 import {
   ColorScheme,
   ColorSchemeProvider,
@@ -7,15 +5,12 @@ import {
   MantineProvider,
   useMantineTheme,
 } from "@mantine/core";
-import { ReactNode, useEffect, useState } from "react";
 import { useLocalStorage } from "@mantine/hooks";
-import { QueryClient, QueryClientProvider } from "react-query";
-
-declare module "react-query/types/react/QueryClientProvider" {
-  interface QueryClientProviderProps {
-    children?: ReactNode;
-  }
-}
+import type { AppProps } from "next/app";
+import { useEffect, useState } from "react";
+import { createClient, Provider } from "urql";
+import "../styles/globals.css";
+import { graphqlurl } from "./../utils/url";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
@@ -27,9 +22,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     defaultValue: "dark",
   });
 
-  const theme = useMantineTheme();
-
-  const queryClient = new QueryClient();
+  const client = createClient({
+    url: graphqlurl,
+    fetchOptions: {
+      credentials: "include",
+    },
+  });
 
   useEffect(() => {
     setColorScheme(value);
@@ -76,9 +74,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             },
           })}
         />
-        <QueryClientProvider client={queryClient}>
+        <Provider value={client}>
           <Component {...pageProps} />
-        </QueryClientProvider>
+        </Provider>
       </MantineProvider>
     </ColorSchemeProvider>
   );

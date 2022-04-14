@@ -1,29 +1,11 @@
-import { useMutation, useQuery, UseMutationOptions, UseQueryOptions } from 'react-query';
+import gql from 'graphql-tag';
+import * as Urql from 'urql';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-
-function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
-  return async (): Promise<TData> => {
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      ...requestInit,
-      body: JSON.stringify({ query, variables }),
-    });
-
-    const json = await res.json();
-
-    if (json.errors) {
-      const { message } = json.errors[0];
-
-      throw new Error(message);
-    }
-
-    return json.data;
-  }
-}
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -610,24 +592,16 @@ export type UserProjectsQueryVariables = Exact<{
 export type UserProjectsQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'Project', id: string, title?: string | null, description?: string | null, githubURL?: string | null, websiteURL?: string | null, image?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null }> | null };
 
 
-export const EndSessionDocument = `
+export const EndSessionDocument = gql`
     mutation endSession {
   endSession
 }
     `;
-export const useEndSessionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      options?: UseMutationOptions<EndSessionMutation, TError, EndSessionMutationVariables, TContext>
-    ) =>
-    useMutation<EndSessionMutation, TError, EndSessionMutationVariables, TContext>(
-      ['endSession'],
-      (variables?: EndSessionMutationVariables) => fetcher<EndSessionMutation, EndSessionMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, EndSessionDocument, variables)(),
-      options
-    );
-export const AuthenticateUserWithPasswordDocument = `
+
+export function useEndSessionMutation() {
+  return Urql.useMutation<EndSessionMutation, EndSessionMutationVariables>(EndSessionDocument);
+};
+export const AuthenticateUserWithPasswordDocument = gql`
     mutation AuthenticateUserWithPassword($email: String!, $password: String!) {
   authenticateUserWithPassword(email: $email, password: $password) {
     ... on UserAuthenticationWithPasswordSuccess {
@@ -652,19 +626,11 @@ export const AuthenticateUserWithPasswordDocument = `
   }
 }
     `;
-export const useAuthenticateUserWithPasswordMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      options?: UseMutationOptions<AuthenticateUserWithPasswordMutation, TError, AuthenticateUserWithPasswordMutationVariables, TContext>
-    ) =>
-    useMutation<AuthenticateUserWithPasswordMutation, TError, AuthenticateUserWithPasswordMutationVariables, TContext>(
-      ['AuthenticateUserWithPassword'],
-      (variables?: AuthenticateUserWithPasswordMutationVariables) => fetcher<AuthenticateUserWithPasswordMutation, AuthenticateUserWithPasswordMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, AuthenticateUserWithPasswordDocument, variables)(),
-      options
-    );
-export const UserDocument = `
+
+export function useAuthenticateUserWithPasswordMutation() {
+  return Urql.useMutation<AuthenticateUserWithPasswordMutation, AuthenticateUserWithPasswordMutationVariables>(AuthenticateUserWithPasswordDocument);
+};
+export const UserDocument = gql`
     query User {
   authenticatedItem {
     ... on User {
@@ -685,20 +651,11 @@ export const UserDocument = `
   }
 }
     `;
-export const useUserQuery = <
-      TData = UserQuery,
-      TError = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: UserQueryVariables,
-      options?: UseQueryOptions<UserQuery, TError, TData>
-    ) =>
-    useQuery<UserQuery, TError, TData>(
-      variables === undefined ? ['User'] : ['User', variables],
-      fetcher<UserQuery, UserQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, UserDocument, variables),
-      options
-    );
-export const UserProjectsDocument = `
+
+export function useUserQuery(options?: Omit<Urql.UseQueryArgs<UserQueryVariables>, 'query'>) {
+  return Urql.useQuery<UserQuery>({ query: UserDocument, ...options });
+};
+export const UserProjectsDocument = gql`
     query UserProjects($where: ProjectWhereInput!) {
   projects(where: $where) {
     id
@@ -712,16 +669,7 @@ export const UserProjectsDocument = `
   }
 }
     `;
-export const useUserProjectsQuery = <
-      TData = UserProjectsQuery,
-      TError = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables: UserProjectsQueryVariables,
-      options?: UseQueryOptions<UserProjectsQuery, TError, TData>
-    ) =>
-    useQuery<UserProjectsQuery, TError, TData>(
-      ['UserProjects', variables],
-      fetcher<UserProjectsQuery, UserProjectsQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, UserProjectsDocument, variables),
-      options
-    );
+
+export function useUserProjectsQuery(options: Omit<Urql.UseQueryArgs<UserProjectsQueryVariables>, 'query'>) {
+  return Urql.useQuery<UserProjectsQuery>({ query: UserProjectsDocument, ...options });
+};

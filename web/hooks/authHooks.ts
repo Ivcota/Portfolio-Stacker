@@ -1,20 +1,13 @@
 import { useRouter } from "next/router";
-import { UserQuery, useUserQuery } from "../src/generated/graphql";
-import { graphqlurl } from "../utils/url";
+import { useUserQuery } from "../src/generated/graphql";
 
 export function useUser() {
   const router = useRouter();
-
-  const { data, isLoading, error } = useUserQuery({
-    endpoint: graphqlurl,
-    fetchParams: {
-      credentials: "include",
-    },
-  });
+  const [userResult, refetchQuery] = useUserQuery();
 
   return {
-    user: data?.authenticatedItem,
-    isLoading,
-    error: error,
+    user: userResult.data?.authenticatedItem,
+    isLoading: userResult.fetching,
+    error: userResult.error?.message,
   };
 }
