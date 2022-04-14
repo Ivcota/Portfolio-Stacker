@@ -10,28 +10,12 @@ import {
 } from "@mantine/core";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useButtonStyles } from "../styles/button";
 
 const useStyles = createStyles((theme) => ({
   base: {
     minHeight: "100vh",
     paddingBottom: theme.spacing.xl,
-  },
-  button: {
-    background:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[0]
-        : theme.colors.dark[9],
-    color:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[9]
-        : theme.colors.dark[0],
-    width: "18rem",
-    ":hover": {
-      background:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[3]
-          : theme.colors.dark[6],
-    },
   },
 }));
 
@@ -39,6 +23,7 @@ const Home: NextPage = () => {
   const { classes } = useStyles();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const router = useRouter();
+  const { pmbClass } = useButtonStyles();
 
   return (
     <Container>
@@ -46,8 +31,9 @@ const Home: NextPage = () => {
         <Title align="center">Portfolio Stacker</Title>
         <Text align="center">Quickly Get Your Work Seen.</Text>
         <Button
+          px={70}
+          className={pmbClass}
           onClick={() => router.push("/login")}
-          className={classes.button}
         >
           Get Started
         </Button>

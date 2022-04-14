@@ -5,6 +5,7 @@ import {
   ColorSchemeProvider,
   Global,
   MantineProvider,
+  useMantineTheme,
 } from "@mantine/core";
 import { ReactNode, useEffect, useState } from "react";
 import { useLocalStorage } from "@mantine/hooks";
@@ -25,6 +26,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     key: "color-scheme",
     defaultValue: "dark",
   });
+
+  const theme = useMantineTheme();
 
   const queryClient = new QueryClient();
 
