@@ -22,14 +22,6 @@ const CheckAuth: FC<Props> = ({ children }) => {
     return <h1>Loading...</h1>;
   }
 
-  if (!user) {
-    return (
-      <div>
-        <Link href="/auth/login">Login Here</Link>
-      </div>
-    );
-  }
-
   return <>{children} </>;
 };
 
