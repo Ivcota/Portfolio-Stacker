@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import {
   ColorScheme,
   ColorSchemeProvider,
+  Global,
   MantineProvider,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
@@ -51,6 +52,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         }}
         withGlobalStyles
       >
+        <Global
+          styles={(theme) => ({
+            body: {
+              transition: "ease-in-out",
+              transitionDuration: "300ms",
+            },
+          })}
+        />
         <Component {...pageProps} />
       </MantineProvider>
     </ColorSchemeProvider>
