@@ -1,0 +1,19 @@
+query User {
+  authenticatedItem {
+    ... on User {
+      id
+      username
+      firstName
+      lastName
+      email
+      profilePicture {
+        id
+        url
+      }
+      githubURL
+      isAdmin
+      websiteURL
+      projectsCount
+    }
+  }
+}
