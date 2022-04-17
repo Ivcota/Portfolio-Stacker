@@ -11,6 +11,7 @@ import React from "react";
 import CheckAuth from "../components/CheckAuth";
 import ProjectCard from "../components/ProjectCard";
 import { useUser } from "../hooks/authHooks";
+import { useUserProjectsQuery } from "../src/generated/graphql";
 import { baseURL } from "./../utils/url";
 
 const myStyles = createStyles((theme) => ({
@@ -26,6 +27,13 @@ const Dashboard: NextPage = () => {
   const { user } = useUser();
 
   const { classes } = myStyles();
+  const [projects] = useUserProjectsQuery({
+    variables: {
+      where: {
+        user: { id: { equals: user?.id } },
+      },
+    },
+  });
 
   return (
     <CheckAuth>
@@ -42,11 +50,9 @@ const Dashboard: NextPage = () => {
           <Text size="lg"> {user?.username} </Text>
         </Stack>
         <div className={classes.cardHolder}>
-          <ProjectCard />
-          <ProjectCard />
-          <ProjectCard />
-          <ProjectCard />
-          <ProjectCard />
+          {projects.data?.projects?.map((project) => {
+            return <ProjectCard />;
+          })}
         </div>
       </Container>
     </CheckAuth>
