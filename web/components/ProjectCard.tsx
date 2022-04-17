@@ -13,6 +13,7 @@ const useStyles = createStyles((theme) => ({
         ? theme.colors.dark[8]
         : theme.colors.dark[2],
     boxShadow: theme.shadows.sm,
+    width: "20rem",
   },
   button: {
     background:
