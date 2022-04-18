@@ -1,5 +1,6 @@
 import { Button, Card, createStyles, Group, Text } from "@mantine/core";
-import React from "react";
+import React, { FC } from "react";
+import { Project } from "../src/generated/graphql";
 
 // interface Props {
 //   title: string;
@@ -27,12 +28,16 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const ProjectCard = () => {
+interface Props {
+  project: Project;
+}
+
+const ProjectCard: FC<Props> = ({ project }) => {
   const { classes } = useStyles();
   return (
     <Card mt="md" className={classes.card}>
-      <Text size="lg">Project Title</Text>
-      <Text>Project Description</Text>
+      <Text size="lg"> {project.title} </Text>
+      <Text> {project.description} </Text>
       <Group position="apart" mt="md">
         <Button className={classes.button}>Source Code</Button>
         <Button className={classes.button}>Live Application</Button>

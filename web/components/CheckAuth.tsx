@@ -1,3 +1,4 @@
+import { Center, Container, Title } from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { FC, useEffect } from "react";
@@ -19,7 +20,13 @@ const CheckAuth: FC<Props> = ({ children }) => {
   }, [user]);
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return (
+      <Container>
+        <Center mt="xl">
+          <Title>Loading...</Title>
+        </Center>
+      </Container>
+    );
   }
 
   return <>{children} </>;
