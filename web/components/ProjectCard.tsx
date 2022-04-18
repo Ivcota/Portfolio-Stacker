@@ -2,11 +2,6 @@ import { Button, Card, createStyles, Group, Text } from "@mantine/core";
 import React, { FC } from "react";
 import { Project } from "../src/generated/graphql";
 
-// interface Props {
-//   title: string;
-
-// }
-
 const useStyles = createStyles((theme) => ({
   card: {
     background:

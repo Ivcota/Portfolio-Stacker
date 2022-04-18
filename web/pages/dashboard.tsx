@@ -61,9 +61,7 @@ const Dashboard: NextPage = () => {
             Sign Out
           </Button>
         </Center>
-        <Center mt="md">
-          <Button onClick={() => toggleColorScheme()}>Change Theme</Button>
-        </Center>
+
         <Title mt="" align="center">
           Portfolio Stacker
         </Title>
