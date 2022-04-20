@@ -586,6 +586,14 @@ export type AuthenticateUserWithPasswordMutationVariables = Exact<{
 
 export type AuthenticateUserWithPasswordMutation = { __typename?: 'Mutation', authenticateUserWithPassword?: { __typename?: 'UserAuthenticationWithPasswordFailure', message: string } | { __typename?: 'UserAuthenticationWithPasswordSuccess', sessionToken: string, item: { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, email?: string | null, isAdmin?: boolean | null, websiteURL?: string | null, githubURL?: string | null, socialMediaURL?: string | null, profilePicture?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null } } | null };
 
+export type UpdateUserMutationVariables = Exact<{
+  where: UserWhereUniqueInput;
+  data: UserUpdateInput;
+}>;
+
+
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'User', profilePicture?: { __typename?: 'CloudImageFieldOutput', id: string, filesize: number, url: string } | { __typename?: 'LocalImageFieldOutput', id: string, filesize: number, url: string } | null } | null };
+
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -648,6 +656,21 @@ export const AuthenticateUserWithPasswordDocument = gql`
 
 export function useAuthenticateUserWithPasswordMutation() {
   return Urql.useMutation<AuthenticateUserWithPasswordMutation, AuthenticateUserWithPasswordMutationVariables>(AuthenticateUserWithPasswordDocument);
+};
+export const UpdateUserDocument = gql`
+    mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {
+  updateUser(where: $where, data: $data) {
+    profilePicture {
+      id
+      filesize
+      url
+    }
+  }
+}
+    `;
+
+export function useUpdateUserMutation() {
+  return Urql.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(UpdateUserDocument);
 };
 export const UserDocument = gql`
     query User {

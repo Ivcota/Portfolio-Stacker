@@ -6,6 +6,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
+import { multipartFetchExchange } from "@urql/exchange-multipart-fetch";
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
 import { createClient, Provider } from "urql";
@@ -27,6 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     fetchOptions: {
       credentials: "include",
     },
+    exchanges: [multipartFetchExchange],
   });
 
   useEffect(() => {

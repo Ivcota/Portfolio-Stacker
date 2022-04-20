@@ -1,0 +1,9 @@
+mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {
+  updateUser(where: $where, data: $data) {
+    profilePicture {
+      id
+      filesize
+      url
+    }
+  }
+}
