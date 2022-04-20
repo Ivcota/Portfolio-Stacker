@@ -566,6 +566,13 @@ export type UserWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
 };
 
+export type CreateUserMutationVariables = Exact<{
+  data: UserCreateInput;
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'Mutation', createUser?: { __typename?: 'User', id: string, email?: string | null } | null };
+
 export type EndSessionMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -592,6 +599,18 @@ export type UserProjectsQueryVariables = Exact<{
 export type UserProjectsQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'Project', id: string, title?: string | null, description?: string | null, githubURL?: string | null, websiteURL?: string | null, image?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null }> | null };
 
 
+export const CreateUserDocument = gql`
+    mutation CreateUser($data: UserCreateInput!) {
+  createUser(data: $data) {
+    id
+    email
+  }
+}
+    `;
+
+export function useCreateUserMutation() {
+  return Urql.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument);
+};
 export const EndSessionDocument = gql`
     mutation endSession {
   endSession

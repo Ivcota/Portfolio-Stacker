@@ -22,6 +22,12 @@ const SettingsComponent = () => {
           Switch Theme
         </Button>
       </Center>
+      <Center>
+        <Button mt="md" className={pmbClass}>
+          {" "}
+          Add Project{" "}
+        </Button>
+      </Center>
     </Container>
   );
 };

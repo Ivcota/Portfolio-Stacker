@@ -10,6 +10,7 @@ import {
   Title,
 } from "@mantine/core";
 import { NextPage } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -29,7 +30,7 @@ const useStyles = createStyles((theme) => ({
     fontSize: theme.fontSizes.md,
   },
   button: {
-    width: "100%",
+    // width: "100%",
   },
   center: {
     minHeight: "100vh",
@@ -37,6 +38,10 @@ const useStyles = createStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+  },
+  bottomText: {
+    marginTop: theme.spacing.md,
+    cursor: "pointer",
   },
 }));
 
@@ -118,6 +123,11 @@ const Login: NextPage = () => {
                 Login
               </Button>
             </Center>
+            <Link href="/register">
+              <Text className={classes.bottomText}>
+                I already have an account
+              </Text>
+            </Link>
           </Card>
         </form>
       </Center>
