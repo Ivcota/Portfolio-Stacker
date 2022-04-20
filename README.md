@@ -34,5 +34,5 @@ Here's the problem this application solves:
 ## Backend Overhaul
 I'm recreating the backend using Keystone 6 because it's more of a batteries included backend. The GraphQL queries and mutations are generated along with the schema all at once. This saves massive amounts of time/money when creating a graphql api.
 
-## FrontEnd Overhaul 
+## Frontend Overhaul 
 I decided to recreate the user interface with Mantine. It gives me all the benefits of TailWindCss with more built-in customizable components. Mantine is customizable which allows me complete freedom with the design system.
