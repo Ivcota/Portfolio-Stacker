@@ -13,7 +13,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useCreateUserMutation } from "../src/generated/graphql";
+import {
+  useAuthenticateUserWithPasswordMutation,
+  useCreateUserMutation,
+} from "../src/generated/graphql";
 import { useButtonStyles } from "../styles/button";
 
 const useStyles = createStyles((theme) => ({
@@ -35,6 +38,8 @@ const Register = () => {
   const { pmbClass } = useButtonStyles();
 
   const [registerResult, registerMutate] = useCreateUserMutation();
+  const [authUserResult, authUserMutate] =
+    useAuthenticateUserWithPasswordMutation();
 
   const {
     handleSubmit,
@@ -56,6 +61,11 @@ const Register = () => {
                   lastName,
                   password,
                 },
+              });
+
+              await authUserMutate({
+                email,
+                password,
               });
 
               alert(
