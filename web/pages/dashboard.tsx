@@ -15,22 +15,13 @@ import React from "react";
 import BottomAppBar from "../components/BottomAppBar";
 import CheckAuth from "../components/CheckAuth";
 import ProjectCard from "../components/ProjectCard";
+import ProjectCardHolder from "../components/ProjectCardHolder";
 import { useUser } from "../hooks/authHooks";
 import {
   useEndSessionMutation,
   useUserProjectsQuery,
 } from "../src/generated/graphql";
 import { baseURL } from "./../utils/url";
-
-const myStyles = createStyles((theme) => ({
-  cardHolder: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    gap: theme.spacing.xs,
-    marginBottom: theme.spacing.xl,
-  },
-}));
 
 const Dashboard: NextPage = () => {
   const { user } = useUser();
@@ -39,7 +30,6 @@ const Dashboard: NextPage = () => {
   const [result, endSession] = useEndSessionMutation();
   const router = useRouter();
 
-  const { classes } = myStyles();
   const [projects] = useUserProjectsQuery({
     variables: {
       where: {
@@ -73,12 +63,12 @@ const Dashboard: NextPage = () => {
           />
           <Text size="lg"> {user?.username} </Text>
         </Stack>
-        <div className={classes.cardHolder}>
+        <ProjectCardHolder>
           {projects.data?.projects?.map((project) => {
             // @ts-expect-error
             return <ProjectCard key={project.id} project={project} />;
           })}
-        </div>
+        </ProjectCardHolder>
       </Container>
       <BottomAppBar />
     </CheckAuth>

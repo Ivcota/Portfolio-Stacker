@@ -125,7 +125,7 @@ const Login: NextPage = () => {
             </Center>
             <Link href="/register">
               <Text className={classes.bottomText}>
-                I already have an account
+                I don't have an account yet
               </Text>
             </Link>
           </Card>

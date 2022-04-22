@@ -10,6 +10,9 @@ const useStyles = createStyles((theme) => ({
         : theme.colors.dark[2],
     boxShadow: theme.shadows.sm,
     width: "20rem",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
   },
   button: {
     background:
@@ -21,6 +24,7 @@ const useStyles = createStyles((theme) => ({
         ? theme.colors.dark[0]
         : theme.colors.dark[9],
   },
+  centerItem: {},
 }));
 
 interface Props {
@@ -31,12 +35,14 @@ const ProjectCard: FC<Props> = ({ project }) => {
   const { classes } = useStyles();
   return (
     <Card mt="md" className={classes.card}>
-      <Text size="lg"> {project.title} </Text>
-      <Text> {project.description} </Text>
-      <Group position="apart" mt="md">
-        <Button className={classes.button}>Source Code</Button>
-        <Button className={classes.button}>Live Application</Button>
-      </Group>
+      <div className={classes.centerItem}>
+        <Text size="lg"> {project.title} </Text>
+        <Text> {project.description} </Text>
+        <Group position="apart" mt="md">
+          <Button className={classes.button}>Source Code</Button>
+          <Button className={classes.button}>Live Application</Button>
+        </Group>
+      </div>
     </Card>
   );
 };
