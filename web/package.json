@@ -10,6 +10,7 @@
     "gen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
+    "@fontsource/satisfy": "^4.5.3",
     "@graphql-codegen/cli": "^2.6.2",
     "@graphql-codegen/typescript-react-query": "^3.5.9",
     "@graphql-codegen/typescript-urql": "^3.5.7",

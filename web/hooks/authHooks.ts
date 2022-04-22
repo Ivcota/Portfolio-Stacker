@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useUserQuery } from "../src/generated/graphql";
+import { useEndSessionMutation, useUserQuery } from "../src/generated/graphql";
 
 export function useUser() {
   const router = useRouter();
@@ -11,3 +11,17 @@ export function useUser() {
     error: userResult.error?.message,
   };
 }
+
+export const useEndUserSession = () => {
+  const [result, endSessionMutate] = useEndSessionMutation();
+  const router = useRouter();
+
+  const endSession = async () => {
+    await endSessionMutate();
+    router.push("/login");
+  };
+
+  return {
+    endSession,
+  };
+};

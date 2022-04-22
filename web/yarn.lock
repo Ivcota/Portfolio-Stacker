@@ -580,6 +580,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@fontsource/satisfy@^4.5.3":
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/@fontsource/satisfy/-/satisfy-4.5.3.tgz#4ec65c2edd7b219fdbbb59946c8bcbb756cb8326"
+  integrity sha512-7wJ8qxnz8/QUlU5ImltpO/ef/c55iAw4iJ9ku1bEEFoQcj5I5jnr97i3vI4zgAmqPRAoHTSxaVQCfury6nQzzA==
+
 "@graphql-codegen/cli@^2.6.2":
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/cli/-/cli-2.6.2.tgz#a9aa4656141ee0998cae8c7ad7d0bf9ca8e0c9ae"

@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
+import Logo from "../components/Logo";
 import {
   useAuthenticateUserWithPasswordMutation,
   useCreateUserMutation,
@@ -22,7 +23,7 @@ import { useButtonStyles } from "../styles/button";
 const useStyles = createStyles((theme) => ({
   card: { width: "20rem", boxShadow: theme.shadows.md },
   bottomText: { cursor: "pointer" },
-  heading: { fontWeight: "lighter" },
+  heading: { fontWeight: "lighter", fontSize: "24px" },
 }));
 
 interface IForm {
@@ -82,7 +83,7 @@ const Register = () => {
         <Center>
           <Card className={classes.card} mt="lg">
             <Center mt="lg">
-              <Title>Portfolio Stacker</Title>
+              <Logo />
             </Center>
             <Title className={classes.heading} align="center">
               Register

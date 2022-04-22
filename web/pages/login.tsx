@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
+import Logo from "../components/Logo";
 import { useButtonStyles } from "../styles/button";
 import { useAuthenticateUserWithPasswordMutation } from "./../src/generated/graphql";
 
@@ -81,16 +82,14 @@ const Login: NextPage = () => {
 
   return (
     <Container className={classes.center} size="sm">
-      <Center>
+      <Center mb={50}>
         <form
           onSubmit={handleSubmit(async ({ email, password }) => {
             loginUser(email, password);
           })}
         >
           <Card className={classes.card}>
-            <Title align="center" className={classes.heading}>
-              Portfolio Stacker
-            </Title>
+            <Logo />
             <Text
               align="center"
               className={classes.subHeading}

@@ -6,10 +6,12 @@ import {
   useMantineColorScheme,
 } from "@mantine/core";
 import React from "react";
+import { useEndUserSession } from "../hooks/authHooks";
 import { useButtonStyles } from "../styles/button";
 
 const SettingsComponent = () => {
-  const { toggleColorScheme } = useMantineColorScheme();
+  const { endSession } = useEndUserSession();
+
   const { pmbClass } = useButtonStyles();
   return (
     <Container>
@@ -17,15 +19,9 @@ const SettingsComponent = () => {
       <Center mt="xl">
         <Button className={pmbClass}> Account Settings </Button>
       </Center>
-      <Center mt="md">
-        <Button className={pmbClass} onClick={() => toggleColorScheme()}>
-          Switch Theme
-        </Button>
-      </Center>
       <Center>
-        <Button mt="md" className={pmbClass}>
-          {" "}
-          Add Project{" "}
+        <Button onClick={() => endSession()} mt="md" className={pmbClass}>
+          Sign Out
         </Button>
       </Center>
     </Container>

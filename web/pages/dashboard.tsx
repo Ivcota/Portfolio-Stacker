@@ -1,34 +1,18 @@
-import {
-  Button,
-  Center,
-  Container,
-  createStyles,
-  Image,
-  Stack,
-  Text,
-  Title,
-  useMantineColorScheme,
-} from "@mantine/core";
+import "@fontsource/satisfy";
+import { Container, Image, Stack, Text } from "@mantine/core";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
 import React from "react";
 import BottomAppBar from "../components/BottomAppBar";
 import CheckAuth from "../components/CheckAuth";
+import Logo from "../components/Logo";
 import ProjectCard from "../components/ProjectCard";
 import ProjectCardHolder from "../components/ProjectCardHolder";
 import { useUser } from "../hooks/authHooks";
-import {
-  useEndSessionMutation,
-  useUserProjectsQuery,
-} from "../src/generated/graphql";
+import { useUserProjectsQuery } from "../src/generated/graphql";
 import { baseURL } from "./../utils/url";
 
 const Dashboard: NextPage = () => {
   const { user } = useUser();
-  const { toggleColorScheme } = useMantineColorScheme();
-
-  const [result, endSession] = useEndSessionMutation();
-  const router = useRouter();
 
   const [projects] = useUserProjectsQuery({
     variables: {
@@ -41,21 +25,8 @@ const Dashboard: NextPage = () => {
   return (
     <CheckAuth>
       <Container>
-        <Center mt="md">
-          <Button
-            onClick={async () => {
-              await endSession();
-              router.push("/login");
-            }}
-          >
-            Sign Out
-          </Button>
-        </Center>
-
-        <Title mt="" align="center">
-          Portfolio Stacker
-        </Title>
-        <Stack mt={100} align="center">
+        <Logo />
+        <Stack mt={50} mb={50} align="center">
           <Image
             width={180}
             radius={100}

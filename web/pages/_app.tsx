@@ -10,6 +10,7 @@ import { multipartFetchExchange } from "@urql/exchange-multipart-fetch";
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
 import { createClient, Provider } from "urql";
+import Navbar from "../components/Navbar";
 import "../styles/globals.css";
 import { graphqlurl } from "./../utils/url";
 
@@ -77,6 +78,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           })}
         />
         <Provider value={client}>
+          <Navbar />
           <Component {...pageProps} />
         </Provider>
       </MantineProvider>
