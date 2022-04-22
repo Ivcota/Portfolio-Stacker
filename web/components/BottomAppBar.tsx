@@ -11,7 +11,7 @@ const useStyles = createStyles((theme) => ({
     position: "fixed",
     bottom: 0,
     minWidth: "100vw",
-    backgroundColor: theme.colors.dark[1],
+    backgroundColor: "white",
     color: theme.colors.dark[9],
     paddingTop: theme.spacing.md,
     paddingBottom: theme.spacing.md,

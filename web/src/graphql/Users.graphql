@@ -1,0 +1,15 @@
+query Users($where: UserWhereInput!) {
+  users(where: $where) {
+    id
+    username
+    firstName
+    lastName
+    email
+    profilePicture {
+      url
+    }
+    socialMediaURL
+    githubURL
+    projectsCount
+  }
+}
