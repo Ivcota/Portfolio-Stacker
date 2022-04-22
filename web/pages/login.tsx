@@ -1,3 +1,4 @@
+import "@fontsource/satisfy";
 import {
   Button,
   Card,
@@ -7,12 +8,11 @@ import {
   Input,
   InputWrapper,
   Text,
-  Title,
 } from "@mantine/core";
 import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Logo from "../components/Logo";
 import { useButtonStyles } from "../styles/button";
@@ -56,6 +56,8 @@ const Login: NextPage = () => {
   const { pmbClass } = useButtonStyles();
   const router = useRouter();
 
+  const [isError, setIsError] = useState(false);
+
   const [authResult, auth] = useAuthenticateUserWithPasswordMutation();
 
   async function loginUser(email: string, password: string) {
@@ -75,6 +77,7 @@ const Login: NextPage = () => {
     } catch (error) {
       console.log(authResult.error?.message);
       console.log("fail");
+      setIsError(true);
     }
   }
 
@@ -122,6 +125,14 @@ const Login: NextPage = () => {
                 Login
               </Button>
             </Center>
+
+            {isError && (
+              <Text mt="sm" color="red">
+                {" "}
+                Incorrect email or password{" "}
+              </Text>
+            )}
+
             <Link href="/register">
               <Text className={classes.bottomText}>
                 I don't have an account yet

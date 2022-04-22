@@ -1,9 +1,9 @@
+import "@fontsource/satisfy";
 import {
   ColorScheme,
   ColorSchemeProvider,
   Global,
   MantineProvider,
-  useMantineTheme,
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { multipartFetchExchange } from "@urql/exchange-multipart-fetch";
