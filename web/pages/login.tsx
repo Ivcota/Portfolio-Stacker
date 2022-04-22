@@ -34,7 +34,7 @@ const useStyles = createStyles((theme) => ({
     // width: "100%",
   },
   center: {
-    minHeight: "100vh",
+    minHeight: "90vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

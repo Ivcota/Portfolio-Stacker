@@ -14,14 +14,13 @@ import { useButtonStyles } from "../styles/button";
 
 const useStyles = createStyles((theme) => ({
   base: {
-    minHeight: "100vh",
+    minHeight: "90vh",
     paddingBottom: theme.spacing.xl,
   },
 }));
 
 const Home: NextPage = () => {
   const { classes } = useStyles();
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const router = useRouter();
   const { pmbClass } = useButtonStyles();
 
