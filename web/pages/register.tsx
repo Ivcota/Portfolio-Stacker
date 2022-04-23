@@ -13,13 +13,17 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useCreateUserMutation } from "../src/generated/graphql";
+import Logo from "../components/Logo";
+import {
+  useAuthenticateUserWithPasswordMutation,
+  useCreateUserMutation,
+} from "../src/generated/graphql";
 import { useButtonStyles } from "../styles/button";
 
 const useStyles = createStyles((theme) => ({
   card: { width: "20rem", boxShadow: theme.shadows.md },
   bottomText: { cursor: "pointer" },
-  heading: { fontWeight: "lighter" },
+  heading: { fontWeight: "lighter", fontSize: "24px" },
 }));
 
 interface IForm {
@@ -35,6 +39,8 @@ const Register = () => {
   const { pmbClass } = useButtonStyles();
 
   const [registerResult, registerMutate] = useCreateUserMutation();
+  const [authUserResult, authUserMutate] =
+    useAuthenticateUserWithPasswordMutation();
 
   const {
     handleSubmit,
@@ -58,6 +64,11 @@ const Register = () => {
                 },
               });
 
+              await authUserMutate({
+                email,
+                password,
+              });
+
               alert(
                 `Success. User with id ${res.data?.createUser?.id} has been created.`
               );
@@ -72,7 +83,7 @@ const Register = () => {
         <Center>
           <Card className={classes.card} mt="lg">
             <Center mt="lg">
-              <Title>Portfolio Stacker</Title>
+              <Logo />
             </Center>
             <Title className={classes.heading} align="center">
               Register

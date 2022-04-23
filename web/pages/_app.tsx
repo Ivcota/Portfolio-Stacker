@@ -1,15 +1,17 @@
+import "@fontsource/satisfy";
 import {
   ColorScheme,
   ColorSchemeProvider,
   Global,
   MantineProvider,
-  useMantineTheme,
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
+import { cacheExchange } from "@urql/exchange-graphcache";
 import { multipartFetchExchange } from "@urql/exchange-multipart-fetch";
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
 import { createClient, Provider } from "urql";
+import Navbar from "../components/Navbar";
 import "../styles/globals.css";
 import { graphqlurl } from "./../utils/url";
 
@@ -28,7 +30,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     fetchOptions: {
       credentials: "include",
     },
-    exchanges: [multipartFetchExchange],
+    exchanges: [
+      multipartFetchExchange,
+      cacheExchange({
+        resolvers: {},
+      }),
+    ],
   });
 
   useEffect(() => {
@@ -77,6 +84,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           })}
         />
         <Provider value={client}>
+          <Navbar />
           <Component {...pageProps} />
         </Provider>
       </MantineProvider>

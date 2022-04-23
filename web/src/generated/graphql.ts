@@ -40,6 +40,7 @@ export type CloudImageFieldOutput = ImageFieldOutput & {
 export type CreateInitialUserInput = {
   email?: InputMaybe<Scalars['String']>;
   firstName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
 };
 
@@ -606,6 +607,13 @@ export type UserProjectsQueryVariables = Exact<{
 
 export type UserProjectsQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'Project', id: string, title?: string | null, description?: string | null, githubURL?: string | null, websiteURL?: string | null, image?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null }> | null };
 
+export type UsersQueryVariables = Exact<{
+  where: UserWhereInput;
+}>;
+
+
+export type UsersQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', id: string, username?: string | null, firstName?: string | null, lastName?: string | null, email?: string | null, socialMediaURL?: string | null, githubURL?: string | null, projectsCount?: number | null, profilePicture?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null }> | null };
+
 
 export const CreateUserDocument = gql`
     mutation CreateUser($data: UserCreateInput!) {
@@ -714,4 +722,25 @@ export const UserProjectsDocument = gql`
 
 export function useUserProjectsQuery(options: Omit<Urql.UseQueryArgs<UserProjectsQueryVariables>, 'query'>) {
   return Urql.useQuery<UserProjectsQuery>({ query: UserProjectsDocument, ...options });
+};
+export const UsersDocument = gql`
+    query Users($where: UserWhereInput!) {
+  users(where: $where) {
+    id
+    username
+    firstName
+    lastName
+    email
+    profilePicture {
+      url
+    }
+    socialMediaURL
+    githubURL
+    projectsCount
+  }
+}
+    `;
+
+export function useUsersQuery(options: Omit<Urql.UseQueryArgs<UsersQueryVariables>, 'query'>) {
+  return Urql.useQuery<UsersQuery>({ query: UsersDocument, ...options });
 };

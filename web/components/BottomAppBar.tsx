@@ -1,6 +1,7 @@
-import { Container, createStyles, Drawer, Group, Title } from "@mantine/core";
-import { AiFillHome, AiFillSetting, AiOutlineSearch } from "react-icons/ai";
+import { createStyles, Drawer, Group } from "@mantine/core";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { AiFillHome, AiFillSetting, AiOutlineSearch } from "react-icons/ai";
 import SettingsComponent from "./SettingsComponent";
 
 const useStyles = createStyles((theme) => ({
@@ -10,7 +11,7 @@ const useStyles = createStyles((theme) => ({
     position: "fixed",
     bottom: 0,
     minWidth: "100vw",
-    backgroundColor: theme.colors.dark[1],
+    backgroundColor: "white",
     color: theme.colors.dark[9],
     paddingTop: theme.spacing.md,
     paddingBottom: theme.spacing.md,
@@ -20,6 +21,7 @@ const useStyles = createStyles((theme) => ({
 const BottomAppBar = () => {
   const { classes } = useStyles();
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <>
@@ -27,7 +29,8 @@ const BottomAppBar = () => {
         <SettingsComponent />
       </Drawer>
       <Group position="apart" className={classes.bottomNav}>
-        <AiFillHome size={25} /> <AiOutlineSearch size={25} />
+        <AiFillHome onClick={() => router.push("/dashboard")} size={25} />{" "}
+        <AiOutlineSearch onClick={() => router.push("/users")} size={25} />
         <AiFillSetting onClick={() => setOpen(true)} size={25} />
       </Group>
     </>
