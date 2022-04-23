@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useEndSessionMutation, useUserQuery } from "../src/generated/graphql";
 
 export function useUser() {
@@ -9,6 +10,7 @@ export function useUser() {
     user: userResult.data?.authenticatedItem,
     isLoading: userResult.fetching,
     error: userResult.error?.message,
+    refetchQuery,
   };
 }
 

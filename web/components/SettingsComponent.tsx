@@ -8,6 +8,7 @@ import {
   Modal,
   Title,
 } from "@mantine/core";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useEndUserSession, useUser } from "../hooks/authHooks";
@@ -23,8 +24,8 @@ interface IForm {
 const SettingsComponent = () => {
   const { endSession } = useEndUserSession();
   const [open, setOpen] = useState(false);
-
-  const { user, isLoading } = useUser();
+  const router = useRouter();
+  const { user, isLoading, refetchQuery } = useUser();
   const [updateUserResult, updateUserMutate] = useUpdateUserMutation();
 
   const { register, handleSubmit, setValue } = useForm<IForm>();
@@ -56,18 +57,27 @@ const SettingsComponent = () => {
       <Modal opened={open} onClose={() => setOpen(false)}>
         <form
           onSubmit={handleSubmit(async ({ firstName, lastName, email }) => {
-            await updateUserMutate({
-              where: {
-                id: user?.id,
+            await updateUserMutate(
+              {
+                where: {
+                  id: user?.id,
+                },
+                data: {
+                  firstName,
+                  lastName,
+                  email,
+                },
               },
-              data: {
-                firstName,
-                lastName,
-                email,
-              },
-            });
+              { additionalTypenames: ["User"] }
+            );
 
             setOpen(false);
+
+            /* 
+            For now, we'll reload after the update is made to force a refetch. However, I might migrate to something like ApolloClient and see if I can get refetch working better.
+            */
+
+            router.reload();
           })}
         >
           <Title>Account Settings</Title>
