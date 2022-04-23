@@ -6,6 +6,7 @@ import {
   MantineProvider,
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
+import { cacheExchange } from "@urql/exchange-graphcache";
 import { multipartFetchExchange } from "@urql/exchange-multipart-fetch";
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
@@ -29,7 +30,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     fetchOptions: {
       credentials: "include",
     },
-    exchanges: [multipartFetchExchange],
+    exchanges: [
+      multipartFetchExchange,
+      cacheExchange({
+        resolvers: {},
+      }),
+    ],
   });
 
   useEffect(() => {

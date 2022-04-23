@@ -1,8 +1,8 @@
-import { Container, createStyles, Drawer, Group, Title } from "@mantine/core";
-import { AiFillHome, AiFillSetting, AiOutlineSearch } from "react-icons/ai";
-import React, { useState } from "react";
-import SettingsComponent from "./SettingsComponent";
+import { createStyles, Drawer, Group } from "@mantine/core";
 import { useRouter } from "next/router";
+import React, { useState } from "react";
+import { AiFillHome, AiFillSetting, AiOutlineSearch } from "react-icons/ai";
+import SettingsComponent from "./SettingsComponent";
 
 const useStyles = createStyles((theme) => ({
   bottomNav: {
