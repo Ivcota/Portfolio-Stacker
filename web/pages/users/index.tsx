@@ -7,7 +7,8 @@ import {
   Title,
 } from "@mantine/core";
 import { NextPage } from "next";
-import React from "react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import BottomAppBar from "../../components/BottomAppBar";
 import Logo from "../../components/Logo";
 import UserItem from "../../components/UserItem";
@@ -17,9 +18,23 @@ import { useUsersQuery } from "../../src/generated/graphql";
 This page will display all the users with pagination and search.
 */
 
+interface IForm {
+  username: string;
+}
+
 const Index: NextPage = () => {
+  const [username, setUsername] = useState("");
+
   const { classes } = myStyles();
-  const { data, loading } = useUsersQuery({ variables: { where: {} } });
+  const { data, loading } = useUsersQuery({
+    variables: {
+      where: {
+        username: {
+          contains: `${username}`,
+        },
+      },
+    },
+  });
 
   return (
     <>
@@ -30,7 +45,11 @@ const Index: NextPage = () => {
             <Title align="center" className={classes.heading} mt="sm" order={2}>
               Search Users
             </Title>
-            <Input placeholder="Search Username" />
+            <Input
+              value={username}
+              onChange={(e: any) => setUsername(e.target.value)}
+              placeholder="Search Username"
+            />
           </Stack>
         </Center>
         <Stack mt="xl" align="center">
