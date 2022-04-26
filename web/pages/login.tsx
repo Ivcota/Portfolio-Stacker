@@ -58,13 +58,16 @@ const Login: NextPage = () => {
 
   const [isError, setIsError] = useState(false);
 
-  const [authResult, auth] = useAuthenticateUserWithPasswordMutation();
+  const [authenticateUserMutation, { client, loading, data, error }] =
+    useAuthenticateUserWithPasswordMutation();
 
   async function loginUser(email: string, password: string) {
     try {
-      const res = await auth({
-        email,
-        password,
+      const res = await authenticateUserMutation({
+        variables: {
+          email,
+          password,
+        },
       });
 
       // @ts-expect-error
@@ -75,7 +78,7 @@ const Login: NextPage = () => {
         router.push("/dashboard");
       }
     } catch (error) {
-      console.log(authResult.error?.message);
+      console.log(error);
       console.log("fail");
       setIsError(true);
     }

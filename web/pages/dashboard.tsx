@@ -14,13 +14,15 @@ import { baseURL } from "./../utils/url";
 const Dashboard: NextPage = () => {
   const { user } = useUser();
 
-  const [projects] = useUserProjectsQuery({
-    variables: {
-      where: {
-        user: { id: { equals: user?.id } },
-      },
-    },
+  const { data, loading, error } = useUserProjectsQuery({
+    variables: { where: { user: { id: { equals: user?.id } } } },
   });
+
+  console.log(data);
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <CheckAuth>
@@ -35,8 +37,8 @@ const Dashboard: NextPage = () => {
           <Text size="lg"> {user?.username} </Text>
         </Stack>
         <ProjectCardHolder>
-          {projects.data?.projects?.map((project) => {
-            // @ts-expect-error
+          {data?.projects?.map((project) => {
+            // @ts-ignore
             return <ProjectCard key={project.id} project={project} />;
           })}
         </ProjectCardHolder>

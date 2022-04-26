@@ -18,11 +18,7 @@ const myStyles = createStyles((theme) => ({
 const Index: NextPage = () => {
   const { classes } = myStyles();
 
-  const [users] = useUsersQuery({
-    variables: {
-      where: {},
-    },
-  });
+  const { data, loading } = useUsersQuery({ variables: { where: {} } });
 
   return (
     <>
@@ -33,8 +29,13 @@ const Index: NextPage = () => {
             Users
           </Title>
         </Center>
-        {users.data?.users?.map((user) => {
-          return <div key={user.id}> {user.firstName} </div>;
+        {data?.users?.map((user) => {
+          return (
+            <div key={user.id}>
+              {" "}
+              {user.firstName} {user.lastName}{" "}
+            </div>
+          );
         })}
       </Container>
       <BottomAppBar />
