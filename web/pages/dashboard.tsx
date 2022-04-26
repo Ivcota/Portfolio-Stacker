@@ -1,19 +1,57 @@
 import "@fontsource/satisfy";
-import { Container, Image, Stack, Text } from "@mantine/core";
+import {
+  Button,
+  Center,
+  Container,
+  Image,
+  Input,
+  InputWrapper,
+  Modal,
+  Stack,
+  Text,
+  Textarea,
+  Title,
+} from "@mantine/core";
+import { useModals } from "@mantine/modals";
 import { NextPage } from "next";
-import React from "react";
+import { type } from "os";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import BottomAppBar from "../components/BottomAppBar";
 import CheckAuth from "../components/CheckAuth";
 import Logo from "../components/Logo";
 import ProjectCard from "../components/ProjectCard";
 import ProjectCardHolder from "../components/ProjectCardHolder";
 import { useUser } from "../hooks/authHooks";
-import { useUserProjectsQuery } from "../src/generated/graphql";
+import {
+  namedOperations,
+  useCreateProjectMutation,
+  useUserProjectsQuery,
+} from "../src/generated/graphql";
+import { useButtonStyles } from "../styles/button";
 import { baseURL } from "./../utils/url";
 
-const Dashboard: NextPage = () => {
-  const { user } = useUser();
+interface IForm {
+  title: string;
+  description: string;
+  sourceCode: string;
+  live: string;
+}
 
+const Dashboard: NextPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IForm>();
+  const [open, setOpen] = useState(false);
+  const { pmbClass } = useButtonStyles();
+
+  const [createProjectMutation, {}] = useCreateProjectMutation({
+    refetchQueries: [namedOperations.Query.UserProjects],
+  });
+
+  const { user } = useUser();
   const { data, loading, error } = useUserProjectsQuery({
     variables: { where: { user: { id: { equals: user?.id } } } },
   });
@@ -34,6 +72,12 @@ const Dashboard: NextPage = () => {
           />
           <Text size="lg"> {user?.username} </Text>
         </Stack>
+        <Center mb="lg">
+          <Button className={pmbClass} onClick={() => setOpen(true)}>
+            Add Project
+          </Button>
+        </Center>
+        {/* @ts-ignore */}
         <ProjectCardHolder>
           {data?.projects?.map((project) => {
             // @ts-ignore
@@ -41,6 +85,71 @@ const Dashboard: NextPage = () => {
           })}
         </ProjectCardHolder>
       </Container>
+      <Modal
+        title="Create new Project"
+        opened={open}
+        onClose={() => setOpen(false)}
+      >
+        <form
+          onSubmit={handleSubmit(
+            async ({ title, description, live, sourceCode }) => {
+              console.log("yes");
+              try {
+                const res = await createProjectMutation({
+                  variables: {
+                    data: {
+                      user: {
+                        connect: {
+                          id: user?.id,
+                        },
+                      },
+                      title,
+                      description,
+                      githubURL: sourceCode,
+                      websiteURL: live,
+                    },
+                  },
+                });
+              } catch (error) {
+                alert(error);
+              }
+            }
+          )}
+        >
+          <InputWrapper error={errors.title?.message} label="Title">
+            <Input
+              {...register("title", { required: "A title is required..." })}
+            />
+          </InputWrapper>
+
+          <Textarea
+            error={errors.description?.message}
+            placeholder="Tell us about the project..."
+            label="Description"
+            {...register("description", {
+              required: "Description is required...",
+            })}
+          />
+          <InputWrapper
+            error={
+              errors.sourceCode?.message ? errors.sourceCode.message : null
+            }
+            label="Source Code URL"
+          >
+            <Input
+              {...register("sourceCode", {
+                required: "Source code is required...",
+              })}
+            />
+          </InputWrapper>
+          <InputWrapper label="Live Application URL">
+            <Input {...register("live")} />
+          </InputWrapper>
+          <Button type="submit" className={pmbClass} mt="md">
+            Create
+          </Button>
+        </form>
+      </Modal>
       <BottomAppBar />
     </CheckAuth>
   );

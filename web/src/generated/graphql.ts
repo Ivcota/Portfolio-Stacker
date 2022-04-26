@@ -567,6 +567,13 @@ export type UserWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
 };
 
+export type CreateProjectMutationVariables = Exact<{
+  data: Array<ProjectCreateInput> | ProjectCreateInput;
+}>;
+
+
+export type CreateProjectMutation = { __typename?: 'Mutation', createProjects?: Array<{ __typename?: 'Project', id: string, title?: string | null } | null> | null };
+
 export type CreateUserMutationVariables = Exact<{
   data: UserCreateInput;
 }>;
@@ -622,6 +629,40 @@ export type UsersQueryVariables = Exact<{
 export type UsersQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', id: string, username?: string | null, firstName?: string | null, lastName?: string | null, email?: string | null, socialMediaURL?: string | null, githubURL?: string | null, projectsCount?: number | null, profilePicture?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null }> | null };
 
 
+export const CreateProjectDocument = gql`
+    mutation CreateProject($data: [ProjectCreateInput!]!) {
+  createProjects(data: $data) {
+    id
+    title
+  }
+}
+    `;
+export type CreateProjectMutationFn = Apollo.MutationFunction<CreateProjectMutation, CreateProjectMutationVariables>;
+
+/**
+ * __useCreateProjectMutation__
+ *
+ * To run a mutation, you first call `useCreateProjectMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateProjectMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createProjectMutation, { data, loading, error }] = useCreateProjectMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateProjectMutation(baseOptions?: Apollo.MutationHookOptions<CreateProjectMutation, CreateProjectMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateProjectMutation, CreateProjectMutationVariables>(CreateProjectDocument, options);
+      }
+export type CreateProjectMutationHookResult = ReturnType<typeof useCreateProjectMutation>;
+export type CreateProjectMutationResult = Apollo.MutationResult<CreateProjectMutation>;
+export type CreateProjectMutationOptions = Apollo.BaseMutationOptions<CreateProjectMutation, CreateProjectMutationVariables>;
 export const CreateUserDocument = gql`
     mutation CreateUser($data: UserCreateInput!) {
   createUser(data: $data) {
@@ -951,6 +992,7 @@ export const namedOperations = {
     Users: 'Users'
   },
   Mutation: {
+    CreateProject: 'CreateProject',
     CreateUser: 'CreateUser',
     DeleteProject: 'DeleteProject',
     endSession: 'endSession',
