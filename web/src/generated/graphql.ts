@@ -615,11 +615,12 @@ export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 export type UserQuery = { __typename?: 'Query', authenticatedItem?: { __typename?: 'User', id: string, username?: string | null, firstName?: string | null, lastName?: string | null, email?: string | null, githubURL?: string | null, isAdmin?: boolean | null, websiteURL?: string | null, projectsCount?: number | null, profilePicture?: { __typename?: 'CloudImageFieldOutput', id: string, url: string } | { __typename?: 'LocalImageFieldOutput', id: string, url: string } | null } | null };
 
 export type UserProjectsQueryVariables = Exact<{
+  orderBy: Array<ProjectOrderByInput> | ProjectOrderByInput;
   where: ProjectWhereInput;
 }>;
 
 
-export type UserProjectsQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'Project', id: string, title?: string | null, description?: string | null, githubURL?: string | null, websiteURL?: string | null, image?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null }> | null };
+export type UserProjectsQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'Project', id: string, title?: string | null, description?: string | null, githubURL?: string | null, websiteURL?: string | null }> | null };
 
 export type UsersQueryVariables = Exact<{
   where: UserWhereInput;
@@ -899,13 +900,10 @@ export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
 export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
 export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
 export const UserProjectsDocument = gql`
-    query UserProjects($where: ProjectWhereInput!) {
-  projects(where: $where) {
+    query UserProjects($orderBy: [ProjectOrderByInput!]!, $where: ProjectWhereInput!) {
+  projects(orderBy: $orderBy, where: $where) {
     id
     title
-    image {
-      url
-    }
     description
     githubURL
     websiteURL
@@ -925,6 +923,7 @@ export const UserProjectsDocument = gql`
  * @example
  * const { data, loading, error } = useUserProjectsQuery({
  *   variables: {
+ *      orderBy: // value for 'orderBy'
  *      where: // value for 'where'
  *   },
  * });

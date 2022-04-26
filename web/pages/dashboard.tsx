@@ -10,11 +10,9 @@ import {
   Stack,
   Text,
   Textarea,
-  Title,
 } from "@mantine/core";
-import { useModals } from "@mantine/modals";
+import { showNotification } from "@mantine/notifications";
 import { NextPage } from "next";
-import { type } from "os";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import BottomAppBar from "../components/BottomAppBar";
@@ -43,6 +41,7 @@ const Dashboard: NextPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<IForm>();
   const [open, setOpen] = useState(false);
   const { pmbClass } = useButtonStyles();
@@ -53,7 +52,12 @@ const Dashboard: NextPage = () => {
 
   const { user } = useUser();
   const { data, loading, error } = useUserProjectsQuery({
-    variables: { where: { user: { id: { equals: user?.id } } } },
+    variables: {
+      where: { user: { id: { equals: user?.id } } },
+      orderBy: {
+        title: "asc" as any,
+      },
+    },
   });
 
   if (loading) {
@@ -93,8 +97,8 @@ const Dashboard: NextPage = () => {
         <form
           onSubmit={handleSubmit(
             async ({ title, description, live, sourceCode }) => {
-              console.log("yes");
               try {
+                console.log("yes");
                 const res = await createProjectMutation({
                   variables: {
                     data: {
@@ -110,7 +114,20 @@ const Dashboard: NextPage = () => {
                     },
                   },
                 });
+
+                setOpen(false);
+                reset();
+
+                showNotification({
+                  title: "New Project Created",
+                  message: "Project saved to database.",
+                });
               } catch (error) {
+                showNotification({
+                  title: "Project Creation Error",
+                  message: "Project has not been saved.",
+                  color: "red",
+                });
                 alert(error);
               }
             }

@@ -8,6 +8,7 @@ import {
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { ModalsProvider } from "@mantine/modals";
+import { NotificationsProvider } from "@mantine/notifications";
 import { createUploadLink } from "apollo-upload-client";
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
@@ -80,10 +81,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
 
         <ApolloProvider client={client}>
-          <ModalsProvider>
-            <Navbar />
-            <Component {...pageProps} />
-          </ModalsProvider>
+          <NotificationsProvider position="top-right">
+            <ModalsProvider>
+              <Navbar />
+              <Component {...pageProps} />
+            </ModalsProvider>
+          </NotificationsProvider>
         </ApolloProvider>
       </MantineProvider>
     </ColorSchemeProvider>
