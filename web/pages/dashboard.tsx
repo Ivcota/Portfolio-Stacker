@@ -61,7 +61,11 @@ const Dashboard: NextPage = () => {
   });
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    return (
+      <Center>
+        <Text>Loading...</Text>
+      </Center>
+    );
   }
 
   return (

@@ -601,6 +601,14 @@ export type AuthenticateUserWithPasswordMutationVariables = Exact<{
 
 export type AuthenticateUserWithPasswordMutation = { __typename?: 'Mutation', authenticateUserWithPassword?: { __typename?: 'UserAuthenticationWithPasswordFailure', message: string } | { __typename?: 'UserAuthenticationWithPasswordSuccess', sessionToken: string, item: { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, email?: string | null, isAdmin?: boolean | null, websiteURL?: string | null, githubURL?: string | null, socialMediaURL?: string | null, profilePicture?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null } } | null };
 
+export type UpdateProjectMutationVariables = Exact<{
+  where: ProjectWhereUniqueInput;
+  data: ProjectUpdateInput;
+}>;
+
+
+export type UpdateProjectMutation = { __typename?: 'Mutation', updateProject?: { __typename?: 'Project', id: string } | null };
+
 export type UpdateUserMutationVariables = Exact<{
   where: UserWhereUniqueInput;
   data: UserUpdateInput;
@@ -813,6 +821,40 @@ export function useAuthenticateUserWithPasswordMutation(baseOptions?: Apollo.Mut
 export type AuthenticateUserWithPasswordMutationHookResult = ReturnType<typeof useAuthenticateUserWithPasswordMutation>;
 export type AuthenticateUserWithPasswordMutationResult = Apollo.MutationResult<AuthenticateUserWithPasswordMutation>;
 export type AuthenticateUserWithPasswordMutationOptions = Apollo.BaseMutationOptions<AuthenticateUserWithPasswordMutation, AuthenticateUserWithPasswordMutationVariables>;
+export const UpdateProjectDocument = gql`
+    mutation UpdateProject($where: ProjectWhereUniqueInput!, $data: ProjectUpdateInput!) {
+  updateProject(where: $where, data: $data) {
+    id
+  }
+}
+    `;
+export type UpdateProjectMutationFn = Apollo.MutationFunction<UpdateProjectMutation, UpdateProjectMutationVariables>;
+
+/**
+ * __useUpdateProjectMutation__
+ *
+ * To run a mutation, you first call `useUpdateProjectMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProjectMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProjectMutation, { data, loading, error }] = useUpdateProjectMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdateProjectMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProjectMutation, UpdateProjectMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateProjectMutation, UpdateProjectMutationVariables>(UpdateProjectDocument, options);
+      }
+export type UpdateProjectMutationHookResult = ReturnType<typeof useUpdateProjectMutation>;
+export type UpdateProjectMutationResult = Apollo.MutationResult<UpdateProjectMutation>;
+export type UpdateProjectMutationOptions = Apollo.BaseMutationOptions<UpdateProjectMutation, UpdateProjectMutationVariables>;
 export const UpdateUserDocument = gql`
     mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {
   updateUser(where: $where, data: $data) {
@@ -996,6 +1038,7 @@ export const namedOperations = {
     DeleteProject: 'DeleteProject',
     endSession: 'endSession',
     AuthenticateUserWithPassword: 'AuthenticateUserWithPassword',
+    UpdateProject: 'UpdateProject',
     UpdateUser: 'UpdateUser'
   }
 }
