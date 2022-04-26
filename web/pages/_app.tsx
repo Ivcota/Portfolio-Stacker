@@ -7,6 +7,7 @@ import {
   MantineProvider,
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
+import { ModalsProvider } from "@mantine/modals";
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
 import { Provider } from "urql";
@@ -77,8 +78,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
 
         <ApolloProvider client={client}>
-          <Navbar />
-          <Component {...pageProps} />
+          <ModalsProvider>
+            <Navbar />
+            <Component {...pageProps} />
+          </ModalsProvider>
         </ApolloProvider>
       </MantineProvider>
     </ColorSchemeProvider>

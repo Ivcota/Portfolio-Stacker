@@ -18,8 +18,6 @@ const Dashboard: NextPage = () => {
     variables: { where: { user: { id: { equals: user?.id } } } },
   });
 
-  console.log(data);
-
   if (loading) {
     return <Text>Loading...</Text>;
   }
