@@ -3,7 +3,10 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useUser } from "../hooks/authHooks";
-import { useUpdateUserMutation } from "../src/generated/graphql";
+import {
+  namedOperations,
+  useUpdateUserMutation,
+} from "../src/generated/graphql";
 import { useButtonStyles } from "../styles/button";
 
 interface IForm {
@@ -17,7 +20,11 @@ const ProfileImageUpload = () => {
 
   const router = useRouter();
 
-  const [updateUserResult, updateUserMutate] = useUpdateUserMutation();
+  const [updateUserMutation, {}] = useUpdateUserMutation({
+    refetchQueries: [namedOperations.Query.User],
+  });
+
+  console.log(user);
 
   const {
     register,
@@ -29,20 +36,26 @@ const ProfileImageUpload = () => {
     <Container>
       <form
         onSubmit={handleSubmit(async ({ file }) => {
+          console.log(file[0]);
+
           try {
-            const res = await updateUserMutate({
-              where: {
-                id: user?.id,
-              },
-              data: {
-                profilePicture: {
-                  upload: file[0],
+            const res = await updateUserMutation({
+              variables: {
+                where: {
+                  id: user?.id,
+                },
+                data: {
+                  profilePicture: {
+                    upload: file[0],
+                  },
                 },
               },
             });
 
             router.push("/dashboard");
-          } catch (error) {}
+          } catch (error) {
+            console.log(error);
+          }
         })}
       >
         <Center mt="lg">

@@ -8,17 +8,19 @@ import {
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { ModalsProvider } from "@mantine/modals";
+import { createUploadLink } from "apollo-upload-client";
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
-import { Provider } from "urql";
 import Navbar from "../components/Navbar";
 import "../styles/globals.css";
 import { graphqlurl } from "./../utils/url";
 
 const client = new ApolloClient({
-  uri: graphqlurl,
   cache: new InMemoryCache(),
-  credentials: "include",
+  link: createUploadLink({
+    uri: graphqlurl,
+    credentials: "include",
+  }),
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
