@@ -40,7 +40,7 @@ const Register = () => {
   const { pmbClass } = useButtonStyles();
 
   const [createUserMutation, {}] = useCreateUserMutation();
-  const [authenticateUseeMutation, {}] =
+  const [authenticateUserMutation, {}] =
     useAuthenticateUserWithPasswordMutation({
       refetchQueries: [namedOperations.Query.User],
     });
@@ -69,7 +69,7 @@ const Register = () => {
                 },
               });
 
-              await authenticateUseeMutation({
+              await authenticateUserMutation({
                 variables: {
                   email,
                   password,

@@ -16,7 +16,10 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Logo from "../components/Logo";
 import { useButtonStyles } from "../styles/button";
-import { useAuthenticateUserWithPasswordMutation } from "./../src/generated/graphql";
+import {
+  namedOperations,
+  useAuthenticateUserWithPasswordMutation,
+} from "./../src/generated/graphql";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -59,7 +62,9 @@ const Login: NextPage = () => {
   const [isError, setIsError] = useState(false);
 
   const [authenticateUserMutation, { client, loading, data, error }] =
-    useAuthenticateUserWithPasswordMutation();
+    useAuthenticateUserWithPasswordMutation({
+      refetchQueries: [namedOperations.Query.User],
+    });
 
   async function loginUser(email: string, password: string) {
     try {

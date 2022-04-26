@@ -1,6 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useEndSessionMutation, useUserQuery } from "../src/generated/graphql";
+import {
+  namedOperations,
+  useEndSessionMutation,
+  useUserQuery,
+} from "../src/generated/graphql";
 
 export function useUser() {
   const router = useRouter();
@@ -14,8 +18,9 @@ export function useUser() {
 }
 
 export const useEndUserSession = () => {
-  const [endSessionMutation, { data, loading, error }] =
-    useEndSessionMutation();
+  const [endSessionMutation, { data, loading, error }] = useEndSessionMutation({
+    refetchQueries: [],
+  });
   const router = useRouter();
 
   const endSession = async () => {
