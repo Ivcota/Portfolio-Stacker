@@ -11,6 +11,10 @@ interface Props {
   project: Project;
 }
 
+/* 
+TODO: Create a Modal that allows edits to be made on the project.
+*/
+
 const ProjectCard: FC<Props> = ({ project }) => {
   const [deleteProjectMutation, { loading }] = useDeleteProjectMutation({
     refetchQueries: [namedOperations.Query.UserProjects],
