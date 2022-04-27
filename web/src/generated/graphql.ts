@@ -601,6 +601,13 @@ export type AuthenticateUserWithPasswordMutationVariables = Exact<{
 
 export type AuthenticateUserWithPasswordMutation = { __typename?: 'Mutation', authenticateUserWithPassword?: { __typename?: 'UserAuthenticationWithPasswordFailure', message: string } | { __typename?: 'UserAuthenticationWithPasswordSuccess', sessionToken: string, item: { __typename?: 'User', id: string, firstName?: string | null, lastName?: string | null, email?: string | null, isAdmin?: boolean | null, websiteURL?: string | null, githubURL?: string | null, socialMediaURL?: string | null, profilePicture?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null } } | null };
 
+export type GetSingleUserQueryVariables = Exact<{
+  where: UserWhereUniqueInput;
+}>;
+
+
+export type GetSingleUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, username?: string | null, firstName?: string | null, lastName?: string | null, email?: string | null, socialMediaURL?: string | null, githubURL?: string | null, websiteURL?: string | null, profilePicture?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null, projects?: Array<{ __typename?: 'Project', id: string, title?: string | null, description?: string | null, githubURL?: string | null, websiteURL?: string | null, image?: { __typename?: 'CloudImageFieldOutput', url: string } | { __typename?: 'LocalImageFieldOutput', url: string } | null }> | null } | null };
+
 export type UpdateProjectMutationVariables = Exact<{
   where: ProjectWhereUniqueInput;
   data: ProjectUpdateInput;
@@ -821,6 +828,61 @@ export function useAuthenticateUserWithPasswordMutation(baseOptions?: Apollo.Mut
 export type AuthenticateUserWithPasswordMutationHookResult = ReturnType<typeof useAuthenticateUserWithPasswordMutation>;
 export type AuthenticateUserWithPasswordMutationResult = Apollo.MutationResult<AuthenticateUserWithPasswordMutation>;
 export type AuthenticateUserWithPasswordMutationOptions = Apollo.BaseMutationOptions<AuthenticateUserWithPasswordMutation, AuthenticateUserWithPasswordMutationVariables>;
+export const GetSingleUserDocument = gql`
+    query GetSingleUser($where: UserWhereUniqueInput!) {
+  user(where: $where) {
+    id
+    username
+    firstName
+    lastName
+    email
+    profilePicture {
+      url
+    }
+    socialMediaURL
+    githubURL
+    websiteURL
+    projects {
+      id
+      title
+      image {
+        url
+      }
+      description
+      githubURL
+      websiteURL
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetSingleUserQuery__
+ *
+ * To run a query within a React component, call `useGetSingleUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSingleUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSingleUserQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetSingleUserQuery(baseOptions: Apollo.QueryHookOptions<GetSingleUserQuery, GetSingleUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSingleUserQuery, GetSingleUserQueryVariables>(GetSingleUserDocument, options);
+      }
+export function useGetSingleUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSingleUserQuery, GetSingleUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSingleUserQuery, GetSingleUserQueryVariables>(GetSingleUserDocument, options);
+        }
+export type GetSingleUserQueryHookResult = ReturnType<typeof useGetSingleUserQuery>;
+export type GetSingleUserLazyQueryHookResult = ReturnType<typeof useGetSingleUserLazyQuery>;
+export type GetSingleUserQueryResult = Apollo.QueryResult<GetSingleUserQuery, GetSingleUserQueryVariables>;
 export const UpdateProjectDocument = gql`
     mutation UpdateProject($where: ProjectWhereUniqueInput!, $data: ProjectUpdateInput!) {
   updateProject(where: $where, data: $data) {
@@ -1028,6 +1090,7 @@ export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>;
 export type UsersQueryResult = Apollo.QueryResult<UsersQuery, UsersQueryVariables>;
 export const namedOperations = {
   Query: {
+    GetSingleUser: 'GetSingleUser',
     User: 'User',
     UserProjects: 'UserProjects',
     Users: 'Users'

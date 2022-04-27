@@ -1,5 +1,6 @@
 import "@fontsource/satisfy";
 import {
+  Avatar,
   Button,
   Center,
   Container,
@@ -73,8 +74,8 @@ const Dashboard: NextPage = () => {
       <Container>
         <Logo />
         <Stack mt={50} mb={50} align="center">
-          <Image
-            width={180}
+          <Avatar
+            size={200}
             radius={100}
             src={baseURL + user?.profilePicture?.url}
           />

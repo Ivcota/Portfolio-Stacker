@@ -14,6 +14,7 @@ const UserItem: FC<Props> = ({ user }) => {
 
   return (
     <Group
+      mt="xs"
       onClick={() => router.push("/users/" + user.id)}
       className={classes.userItem}
       position="apart"

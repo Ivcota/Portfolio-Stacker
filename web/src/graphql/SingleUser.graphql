@@ -1,0 +1,25 @@
+query GetSingleUser($where: UserWhereUniqueInput!) {
+  user(where: $where) {
+    id
+    username
+    firstName
+    lastName
+    email
+    profilePicture {
+      url
+    }
+    socialMediaURL
+    githubURL
+    websiteURL
+    projects {
+      id
+      title
+      image {
+        url
+      }
+      description
+      githubURL
+      websiteURL
+    }
+  }
+}

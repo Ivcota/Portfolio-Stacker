@@ -6,7 +6,7 @@ import {
   Stack,
   Title,
 } from "@mantine/core";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import BottomAppBar from "../../components/BottomAppBar";
@@ -46,6 +46,7 @@ const Index: NextPage = () => {
               Search Users
             </Title>
             <Input
+              className={classes.input}
               value={username}
               onChange={(e: any) => setUsername(e.target.value)}
               placeholder="Search Username"
@@ -70,6 +71,9 @@ const myStyles = createStyles((theme) => ({
   },
   userHolder: {
     display: "flex",
+  },
+  input: {
+    width: "14rem",
   },
 }));
 
