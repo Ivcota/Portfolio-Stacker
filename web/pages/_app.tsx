@@ -1,3 +1,4 @@
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import "@fontsource/satisfy";
 import {
   ColorScheme,
@@ -6,14 +7,22 @@ import {
   MantineProvider,
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
-import { cacheExchange } from "@urql/exchange-graphcache";
-import { multipartFetchExchange } from "@urql/exchange-multipart-fetch";
+import { ModalsProvider } from "@mantine/modals";
+import { NotificationsProvider } from "@mantine/notifications";
+import { createUploadLink } from "apollo-upload-client";
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
-import { createClient, Provider } from "urql";
 import Navbar from "../components/Navbar";
 import "../styles/globals.css";
 import { graphqlurl } from "./../utils/url";
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: createUploadLink({
+    uri: graphqlurl,
+    credentials: "include",
+  }),
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
@@ -23,19 +32,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [value, setValue] = useLocalStorage<ColorScheme>({
     key: "color-scheme",
     defaultValue: "dark",
-  });
-
-  const client = createClient({
-    url: graphqlurl,
-    fetchOptions: {
-      credentials: "include",
-    },
-    exchanges: [
-      multipartFetchExchange,
-      cacheExchange({
-        resolvers: {},
-      }),
-    ],
   });
 
   useEffect(() => {
@@ -83,10 +79,15 @@ function MyApp({ Component, pageProps }: AppProps) {
             },
           })}
         />
-        <Provider value={client}>
-          <Navbar />
-          <Component {...pageProps} />
-        </Provider>
+
+        <ApolloProvider client={client}>
+          <NotificationsProvider position="top-right">
+            <ModalsProvider>
+              <Navbar />
+              <Component {...pageProps} />
+            </ModalsProvider>
+          </NotificationsProvider>
+        </ApolloProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );

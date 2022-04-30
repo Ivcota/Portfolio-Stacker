@@ -16,7 +16,10 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Logo from "../components/Logo";
 import { useButtonStyles } from "../styles/button";
-import { useAuthenticateUserWithPasswordMutation } from "./../src/generated/graphql";
+import {
+  namedOperations,
+  useAuthenticateUserWithPasswordMutation,
+} from "./../src/generated/graphql";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -58,13 +61,18 @@ const Login: NextPage = () => {
 
   const [isError, setIsError] = useState(false);
 
-  const [authResult, auth] = useAuthenticateUserWithPasswordMutation();
+  const [authenticateUserMutation, { client, loading, data, error }] =
+    useAuthenticateUserWithPasswordMutation({
+      refetchQueries: [namedOperations.Query.User],
+    });
 
   async function loginUser(email: string, password: string) {
     try {
-      const res = await auth({
-        email,
-        password,
+      const res = await authenticateUserMutation({
+        variables: {
+          email,
+          password,
+        },
       });
 
       // @ts-expect-error
@@ -75,7 +83,7 @@ const Login: NextPage = () => {
         router.push("/dashboard");
       }
     } catch (error) {
-      console.log(authResult.error?.message);
+      console.log(error);
       console.log("fail");
       setIsError(true);
     }

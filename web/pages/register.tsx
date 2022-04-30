@@ -15,6 +15,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Logo from "../components/Logo";
 import {
+  namedOperations,
   useAuthenticateUserWithPasswordMutation,
   useCreateUserMutation,
 } from "../src/generated/graphql";
@@ -38,9 +39,11 @@ const Register = () => {
   const { classes } = useStyles();
   const { pmbClass } = useButtonStyles();
 
-  const [registerResult, registerMutate] = useCreateUserMutation();
-  const [authUserResult, authUserMutate] =
-    useAuthenticateUserWithPasswordMutation();
+  const [createUserMutation, {}] = useCreateUserMutation();
+  const [authenticateUserMutation, {}] =
+    useAuthenticateUserWithPasswordMutation({
+      refetchQueries: [namedOperations.Query.User],
+    });
 
   const {
     handleSubmit,
@@ -55,18 +58,22 @@ const Register = () => {
         onSubmit={handleSubmit(
           async ({ firstName, lastName, email, password }) => {
             try {
-              const res = await registerMutate({
-                data: {
-                  email,
-                  firstName,
-                  lastName,
-                  password,
+              const res = await createUserMutation({
+                variables: {
+                  data: {
+                    email,
+                    firstName,
+                    lastName,
+                    password,
+                  },
                 },
               });
 
-              await authUserMutate({
-                email,
-                password,
+              await authenticateUserMutation({
+                variables: {
+                  email,
+                  password,
+                },
               });
 
               alert(

@@ -1,26 +1,38 @@
-import { Center, Container, createStyles, Title } from "@mantine/core";
-import { NextPage } from "next";
-import React from "react";
+import {
+  Center,
+  Container,
+  createStyles,
+  Input,
+  Stack,
+  Title,
+} from "@mantine/core";
+import { GetServerSideProps, NextPage } from "next";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import BottomAppBar from "../../components/BottomAppBar";
 import Logo from "../../components/Logo";
+import UserItem from "../../components/UserItem";
 import { useUsersQuery } from "../../src/generated/graphql";
 
 /* 
 This page will display all the users with pagination and search.
 */
 
-const myStyles = createStyles((theme) => ({
-  heading: {
-    fontWeight: "normal",
-  },
-}));
+interface IForm {
+  username: string;
+}
 
 const Index: NextPage = () => {
-  const { classes } = myStyles();
+  const [username, setUsername] = useState("");
 
-  const [users] = useUsersQuery({
+  const { classes } = myStyles();
+  const { data, loading } = useUsersQuery({
     variables: {
-      where: {},
+      where: {
+        username: {
+          contains: `${username}`,
+        },
+      },
     },
   });
 
@@ -29,17 +41,40 @@ const Index: NextPage = () => {
       <Container>
         <Logo />
         <Center>
-          <Title className={classes.heading} mt="sm" order={2}>
-            Users
-          </Title>
+          <Stack>
+            <Title align="center" className={classes.heading} mt="sm" order={2}>
+              Search Users
+            </Title>
+            <Input
+              className={classes.input}
+              value={username}
+              onChange={(e: any) => setUsername(e.target.value)}
+              placeholder="Search Username"
+            />
+          </Stack>
         </Center>
-        {users.data?.users?.map((user) => {
-          return <div key={user.id}> {user.firstName} </div>;
-        })}
+        <Stack mt="xl" align="center">
+          {data?.users?.map((user) => {
+            // @ts-ignore
+            return <UserItem key={user.id} user={user} />;
+          })}
+        </Stack>
       </Container>
       <BottomAppBar />
     </>
   );
 };
+
+const myStyles = createStyles((theme) => ({
+  heading: {
+    fontWeight: "normal",
+  },
+  userHolder: {
+    display: "flex",
+  },
+  input: {
+    width: "14rem",
+  },
+}));
 
 export default Index;

@@ -1,10 +1,10 @@
-query UserProjects($where: ProjectWhereInput!) {
-  projects(where: $where) {
+query UserProjects(
+  $orderBy: [ProjectOrderByInput!]!
+  $where: ProjectWhereInput!
+) {
+  projects(orderBy: $orderBy, where: $where) {
     id
     title
-    image {
-      url
-    }
     description
     githubURL
     websiteURL

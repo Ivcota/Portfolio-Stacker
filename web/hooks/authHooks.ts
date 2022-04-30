@@ -1,25 +1,30 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useEndSessionMutation, useUserQuery } from "../src/generated/graphql";
+import {
+  namedOperations,
+  useEndSessionMutation,
+  useUserQuery,
+} from "../src/generated/graphql";
 
 export function useUser() {
   const router = useRouter();
-  const [userResult, refetchQuery] = useUserQuery();
+  const { data, loading, error } = useUserQuery();
 
   return {
-    user: userResult.data?.authenticatedItem,
-    isLoading: userResult.fetching,
-    error: userResult.error?.message,
-    refetchQuery,
+    user: data?.authenticatedItem,
+    isLoading: loading,
+    error: error,
   };
 }
 
 export const useEndUserSession = () => {
-  const [result, endSessionMutate] = useEndSessionMutation();
+  const [endSessionMutation, { data, loading, error }] = useEndSessionMutation({
+    refetchQueries: [],
+  });
   const router = useRouter();
 
   const endSession = async () => {
-    await endSessionMutate();
+    await endSessionMutation();
     router.push("/login");
   };
 
