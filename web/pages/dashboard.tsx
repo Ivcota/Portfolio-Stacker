@@ -48,7 +48,10 @@ const Dashboard: NextPage = () => {
   const { pmbClass } = useButtonStyles();
 
   const [createProjectMutation, {}] = useCreateProjectMutation({
-    refetchQueries: [namedOperations.Query.UserProjects],
+    refetchQueries: [
+      namedOperations.Query.UserProjects,
+      namedOperations.Query.Users,
+    ],
   });
 
   const { user } = useUser();

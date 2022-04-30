@@ -183,6 +183,13 @@ const useStyles = createStyles((theme) => ({
       theme.colorScheme === "dark"
         ? theme.colors.dark[0]
         : theme.colors.dark[9],
+
+    ":focus": {
+      color:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[0]
+          : theme.colors.dark[0],
+    },
   },
   centerItem: {},
 }));

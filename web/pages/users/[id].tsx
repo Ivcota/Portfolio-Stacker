@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import BottomAppBar from "../../components/BottomAppBar";
 import Logo from "../../components/Logo";
+import ProjectCardHolder from "../../components/ProjectCardHolder";
+import ProjectCard from "../../components/PublicProjectCard";
 import {
   useGetSingleUserQuery,
   User,
@@ -49,6 +51,12 @@ const UserPage: NextPage<Props> = () => {
       <Center mt="xs">
         <Title order={5}> {data?.user?.username} </Title>
       </Center>
+      <ProjectCardHolder>
+        {data?.user?.projects?.map((project) => {
+          // @ts-ignore
+          return <ProjectCard key={project.id} project={project} />;
+        })}
+      </ProjectCardHolder>
       <BottomAppBar />
     </div>
   );
