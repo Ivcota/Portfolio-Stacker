@@ -1,9 +1,0 @@
-
-server/public/images/3c2005fd-7a45-4bd2-8759-59de21a6a322.png
-server/public/images/1034cc38-cf60-4e05-97d2-6f830ccc02cb.png
-server/public/images/78499a80-e5c3-45cc-83d8-03f683722b49.jpg
-server/public/images/fca6babf-a3a6-4254-b1e1-d1de0df5c61c.jpg
-server/Dockerfile
-server/.env
-server/.dockerignore
-server/auth.ts

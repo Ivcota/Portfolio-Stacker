@@ -19,8 +19,8 @@ export default withAuth(
   config({
     // the db sets the database provider - we're using sqlite for the fastest startup experience
     db: {
-      provider: "sqlite",
-      url: "file:./keystone.db",
+      provider: "postgresql",
+      url: "postgresql://app:app@localhost:5432/portfolio-stacker",
     },
     // This config allows us to set up features of the Admin UI https://keystonejs.com/docs/apis/config#ui
     ui: {
