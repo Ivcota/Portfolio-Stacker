@@ -1,9 +1,11 @@
-FROM node:16.13-bullseye-slim
+FROM node:16.13
 
 COPY . .
 
-RUN yarn --ignore-scripts
+RUN yarn
 
 EXPOSE 3000
 
-CMD [ "yarn", "dev" ]
+RUN yarn build
+
+CMD [ "yarn", "start" ]
