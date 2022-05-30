@@ -20,8 +20,11 @@ export default withAuth(
   config({
     // the db sets the database provider - we're using sqlite for the fastest startup experience
     db: {
-      provider: "postgresql",
-      url: process.env.DB as string,
+      provider: process.env.NODE_ENV === "production" ? "postgresql" : "sqlite",
+      url:
+        process.env.NODE_ENV === "production"
+          ? (process.env.DB as string)
+          : "file:./keystone.db",
     },
     // This config allows us to set up features of the Admin UI https://keystonejs.com/docs/apis/config#ui
     ui: {
