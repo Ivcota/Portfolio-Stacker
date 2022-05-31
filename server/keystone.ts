@@ -42,7 +42,11 @@ export default withAuth(
     },
     server: {
       cors: {
-        origin: ["https://studio.apollographql.com", "http://localhost:3001"],
+        origin: [
+          "https://studio.apollographql.com",
+          "http://localhost",
+          "https://localhost",
+        ],
         credentials: true,
       },
     },
