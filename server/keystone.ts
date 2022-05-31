@@ -46,6 +46,7 @@ export default withAuth(
           "https://studio.apollographql.com",
           "http://localhost",
           "https://localhost",
+          "https://portfolio-stacker.vercel.app",
         ],
         credentials: true,
       },
