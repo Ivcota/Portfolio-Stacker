@@ -44,8 +44,8 @@ export default withAuth(
       cors: {
         origin: [
           "https://studio.apollographql.com",
-          "http://localhost",
-          "https://localhost",
+          "http://localhost:3000",
+          "http://localhost:3001",
           "https://portfolio-stacker.vercel.app",
         ],
         credentials: true,
