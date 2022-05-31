@@ -11,7 +11,7 @@ import { createAuth } from "@keystone-6/auth";
 
 // See https://keystonejs.com/docs/apis/session#session-api for the session docs
 import { statelessSessions } from "@keystone-6/core/session";
-import "dotenv/config";
+// import "dotenv/config";
 
 let sessionSecret = process.env.SESSION_SECRET;
 
