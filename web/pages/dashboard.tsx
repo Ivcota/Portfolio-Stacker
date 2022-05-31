@@ -73,110 +73,112 @@ const Dashboard: NextPage = () => {
   }
 
   return (
-    <CheckAuth>
-      <Container>
-        <Logo />
-        <Stack mt={50} mb={50} align="center">
-          <Avatar
-            size={200}
-            radius={100}
-            src={baseURL + user?.profilePicture?.url}
-          />
-          <Text size="lg"> {user?.username} </Text>
-        </Stack>
-        <Center mb="lg">
-          <Button className={pmbClass} onClick={() => setOpen(true)}>
-            Add Project
-          </Button>
-        </Center>
-        {/* @ts-ignore */}
-        <ProjectCardHolder>
-          {data?.projects?.map((project) => {
-            // @ts-ignore
-            return <ProjectCard key={project.id} project={project} />;
-          })}
-        </ProjectCardHolder>
-      </Container>
-      <Modal
-        title="Create new Project"
-        opened={open}
-        onClose={() => setOpen(false)}
-      >
-        <form
-          onSubmit={handleSubmit(
-            async ({ title, description, live, sourceCode }) => {
-              try {
-                console.log("yes");
-                const res = await createProjectMutation({
-                  variables: {
-                    data: {
-                      user: {
-                        connect: {
-                          id: user?.id,
-                        },
-                      },
-                      title,
-                      description,
-                      githubURL: sourceCode,
-                      websiteURL: live,
-                    },
-                  },
-                });
-
-                setOpen(false);
-                reset();
-
-                showNotification({
-                  title: "New Project Created",
-                  message: "Project saved to database.",
-                });
-              } catch (error) {
-                showNotification({
-                  title: "Project Creation Error",
-                  message: "Project has not been saved.",
-                  color: "red",
-                });
-                alert(error);
-              }
-            }
-          )}
-        >
-          <InputWrapper error={errors.title?.message} label="Title">
-            <Input
-              {...register("title", { required: "A title is required..." })}
+    <>
+      <CheckAuth>
+        <Container>
+          <Logo />
+          <Stack mt={50} mb={50} align="center">
+            <Avatar
+              size={200}
+              radius={100}
+              src={baseURL + user?.profilePicture?.url}
             />
-          </InputWrapper>
-
-          <Textarea
-            error={errors.description?.message}
-            placeholder="Tell us about the project..."
-            label="Description"
-            {...register("description", {
-              required: "Description is required...",
+            <Text size="lg"> {user?.username} </Text>
+          </Stack>
+          <Center mb="lg">
+            <Button className={pmbClass} onClick={() => setOpen(true)}>
+              Add Project
+            </Button>
+          </Center>
+          {/* @ts-ignore */}
+          <ProjectCardHolder>
+            {data?.projects?.map((project) => {
+              // @ts-ignore
+              return <ProjectCard key={project.id} project={project} />;
             })}
-          />
-          <InputWrapper
-            error={
-              errors.sourceCode?.message ? errors.sourceCode.message : null
-            }
-            label="Source Code URL"
+          </ProjectCardHolder>
+        </Container>
+        <Modal
+          title="Create new Project"
+          opened={open}
+          onClose={() => setOpen(false)}
+        >
+          <form
+            onSubmit={handleSubmit(
+              async ({ title, description, live, sourceCode }) => {
+                try {
+                  console.log("yes");
+                  const res = await createProjectMutation({
+                    variables: {
+                      data: {
+                        user: {
+                          connect: {
+                            id: user?.id,
+                          },
+                        },
+                        title,
+                        description,
+                        githubURL: sourceCode,
+                        websiteURL: live,
+                      },
+                    },
+                  });
+
+                  setOpen(false);
+                  reset();
+
+                  showNotification({
+                    title: "New Project Created",
+                    message: "Project saved to database.",
+                  });
+                } catch (error) {
+                  showNotification({
+                    title: "Project Creation Error",
+                    message: "Project has not been saved.",
+                    color: "red",
+                  });
+                  alert(error);
+                }
+              }
+            )}
           >
-            <Input
-              {...register("sourceCode", {
-                required: "Source code is required...",
+            <InputWrapper error={errors.title?.message} label="Title">
+              <Input
+                {...register("title", { required: "A title is required..." })}
+              />
+            </InputWrapper>
+
+            <Textarea
+              error={errors.description?.message}
+              placeholder="Tell us about the project..."
+              label="Description"
+              {...register("description", {
+                required: "Description is required...",
               })}
             />
-          </InputWrapper>
-          <InputWrapper label="Live Application URL">
-            <Input {...register("live")} />
-          </InputWrapper>
-          <Button type="submit" className={pmbClass} mt="md">
-            Create
-          </Button>
-        </form>
-      </Modal>
-      <BottomAppBar />
-    </CheckAuth>
+            <InputWrapper
+              error={
+                errors.sourceCode?.message ? errors.sourceCode.message : null
+              }
+              label="Source Code URL"
+            >
+              <Input
+                {...register("sourceCode", {
+                  required: "Source code is required...",
+                })}
+              />
+            </InputWrapper>
+            <InputWrapper label="Live Application URL">
+              <Input {...register("live")} />
+            </InputWrapper>
+            <Button type="submit" className={pmbClass} mt="md">
+              Create
+            </Button>
+          </form>
+        </Modal>
+        <BottomAppBar />
+      </CheckAuth>
+    </>
   );
 };
 
